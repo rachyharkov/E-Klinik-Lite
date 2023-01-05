@@ -13,12 +13,6 @@
     background-color: #686868;
 }
 
-.tab-pane {
-    border: 1px solid #435ebe;
-    padding: 9px;
-    border-radius: 10px;
-}
-
 .btn-remove-from-list {
     top: 6px;
     position: absolute;

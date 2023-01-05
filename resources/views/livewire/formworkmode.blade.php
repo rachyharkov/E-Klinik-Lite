@@ -1,7 +1,7 @@
 <div>
     {{-- Success is as dangerous as failure. --}}
     <div class="card">
-        <div class="card-header pb-0">
+        <div class="card-header-formnya">
             <div class="all-steps" id="all-steps">
                 <span class="step {{ $currentStep == 1 ? 'active' : '' }} {{ $formisian[0]['done'] == true ? 'finish' : '' }}"></span>
                 <span class="step {{ $currentStep == 2 ? 'active' : '' }} {{ $formisian[1]['done'] == true ? 'finish' : '' }}"></span>
@@ -13,7 +13,7 @@
                 <label class="badge bg-primary" style="font-size: 20px;">1</label>
             </div>
         </div>
-        <div class="card-body" style="height: 80vh;">
+        <div class="card-body" style="padding-bottom: 5px;">
             <div class="loading-state" wire:loading>
                 <div class="spinner-border text-primary" role="status" style="position: absolute; left: 2rem; top: 1rem;" >
                     <span class="visually-hidden">Loading...</span>

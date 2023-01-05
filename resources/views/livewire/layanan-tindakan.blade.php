@@ -5,13 +5,14 @@
         </div>
         <div class="tab-layanan-tindakan-untuk-pasien" style="width: 75%; height: 100%;">
             <form style="display: flex;
+            justify-content: space-evenly;
             flex-direction: column;
             height: 100%;">
                 <h4 style="margin-left: 1rem;margin-top: 1rem;">Tindakan Untuk Pasien</h4>
                 <div class="list-of-tindakan-terhadap-pasien">
                     <ul class="droppable cool-scroll" style="height: 50vh;width: 100%;padding: 0 10px;overflow-y:scroll"></ul>
                 </div>
-                <button type="submit" class="btn btn-success btn-sm" style="width: 100%;height: 100%;">Simpan</button>
+                <button type="submit" class="btn btn-success btn-sm" style="width: 100%;">Simpan</button>
             </form>
         </div>
     </div>
