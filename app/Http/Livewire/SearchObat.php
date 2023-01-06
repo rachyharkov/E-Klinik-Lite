@@ -11,12 +11,6 @@ class SearchObat extends Component
 {
     public $term = '';
 
-    public $dataobatuntukpasien = [];
-
-    protected $listeners = [
-        'listObatuntukPasien',
-    ];
-
     public function render()
     {
         sleep(1);
@@ -38,27 +32,17 @@ class SearchObat extends Component
                             ->select('harga_obats.*', 'jenis_patients.nama_jenis_pasien')->where('id_jenis_pasien', 1); // 1 = non-member
                     }
                 ])->where('nama_obat', 'like', '%' . $this->term . '%')->get();
-
-                // dd($obatsearchresult->toArray());
             }
         }
 
+        $this->dispatchBrowserEvent('detectObatYangUdahDitambah', [
+            'statusnya' => 'ayyy'
+        ]);
+
         $data = [
-            'obatsearchresult' => $obatsearchresult,
-            'dataobatuntukpasiennya' => $this->dataobatuntukpasien
+            'obatsearchresult' => $obatsearchresult
         ];
+
         return view('livewire.search-obat', $data);
-    }
-
-    public function setObatUntukPasien($id)
-    {
-        $this->emitUp('setObatUntukPasien', $id);
-        $this->dispatchBrowserEvent('status-nambahin-obat', ['statusnya' => 'loading']);
-    }
-
-    public function listObatuntukPasien($data)
-    {
-        $this->dataobatuntukpasien = $data;
-        $this->dispatchBrowserEvent('status-nambahin-obat', ['statusnya' => 'selesai']);
     }
 }

@@ -36,3 +36,57 @@ ul.list-group li:hover {
     right: -7px;
     transform: scale(0.6);
 }
+
+.anjay-effect {
+    animation: zoom-inandout 0.5s ease-in-out;
+    transition: all 0.5s ease-in-out;
+}
+
+@keyframes zoom-inandout {
+    0% {
+        transform: scale(1.2);
+    }
+    50% {
+        transform: scale(0.8);
+    }
+    100% {
+        transform: scale(1.2);
+    }
+}
+
+
+.context-menu{
+    display: none;
+    position: absolute;
+    border: 1px solid black;
+    border-radius: 3px;
+    width: 200px;
+    background: white;
+    box-shadow: 10px 10px 5px #888888;
+}
+
+.context-menu ul{
+    list-style: none;
+    padding: 2px;
+}
+
+.context-menu ul li{
+    padding: 5px 2px;
+    margin-bottom: 3px;
+    color: white;
+    font-weight: bold;
+    background-color: darkturquoise;
+}
+
+.context-menu ul li:hover{
+    cursor: pointer;
+    background-color: #7fffd4;
+}
+
+.garis-pemisah-custom {
+    border-bottom: 1px #dbdbdb solid;
+}
+
+.theme-dark .garis-pemisah-custom {
+    border-bottom: 1px #3a3a3a solid;
+}

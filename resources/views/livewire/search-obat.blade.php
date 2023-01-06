@@ -1,15 +1,14 @@
-<div class="search-obat-wrapper" style="position: relative;">
-    <div class="input-group mb-3" style="z-index: 2;">
-        <span class="input-group-text" id="basic-addon1" style="line-height: 0;" wire:loading.remove><i class="bi bi-search"></i></span>
-        <span class="input-group-text" id="basic-addon1" style="line-height: 1;" wire:loading>
-            <div class="spinner-border spinner-border-sm" role="status">
-                <span class="visually-hidden">Loading...</span>
-            </div>
-        </span>
-
+<div class="search-obat-wrapper" style="position: relative;z-index: 2;">
+    <div class="input-group-cust mb-3" style="z-index: 2;position: relative;">
         <input type="text" class="form-control" placeholder="Cari Obat (min. 3 Karakter)" aria-label="Cari Obat" id="searchbox-obat" aria-describedby="button-addon2" wire:model.debounce.800ms="term">
+
+        {{-- spinner --}}
+        <img src="{{ asset('images/ball-triangle.svg') }}" alt="" class="spinner-obat" style="position: absolute;
+        top: -11px;
+        right: -5px;
+        transform: scale(0.4);" wire:loading />
+
     </div>
-    @if($obatsearchresult)
     <ul class="list-group list-group-flush cool-scroll list-of-obat" style="overflow-y: scroll;
     width: 100%;
     max-height: 30vh;
@@ -20,23 +19,23 @@
     top: 37px;
     transition: all 0.5s ease-in-out;
     box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;">
+        @if($obatsearchresult)
             @if($obatsearchresult->isEmpty())
-                <li class="list-group obatnya" style="display: flex;
-                flex-direction: row;
-                padding: 7px;
-                width: 100%;
-                justify-content: space-between;">
+                <li class="list-group obatnya" style="padding: 10px 1rem;
+                width: 100%;text-align:center;">
                     <div>
                         <h5>Obat tidak ditemukan</h5>
                     </div>
                 </li>
             @else
                 @foreach ($obatsearchresult as $obatnya)
-                    <li class="list-group obatnya" style="display: flex;
+                    <li class="list-group obatnya garis-pemisah-custom" style="display: flex;
                     flex-direction: row;
-                    padding: 7px;
+                    padding: 8px 20px;
                     width: 100%;
-                    justify-content: space-between;">
+                    justify-content: space-between;"
+                    data-idobat="{{ $obatnya->id }}"
+                    >
                         <div>
                             <h5>{{ $obatnya->nama_obat }} <span style="font-size: 11px; font-weight: 300;">Rp.{{ $obatnya->harga_obats[0]->harga }} <label class="badge bg-secondary">{{$obatnya->harga_obats[0]->nama_jenis_pasien }}</label></span></h5>
                             <table style="font-size: 10px;">
@@ -62,20 +61,25 @@
                                 </tr>
                             </table>
                         </div>
-                        <div class="action" style="line-height: 6;">
-                            @if(in_array($obatnya->id, $dataobatuntukpasiennya))
-                                <p style="font-size: 13px; color: gray;">Sudah ditambahkan</p>
-                            @else
-                                <button type="button" class="btn btn-primary btn-setobatnya btn-sm" style="font-size: 13px;
-                                line-height: 0;
-                                padding: 10px;" wire:click="setObatUntukPasien({{ $obatnya->id }})">Tambah</button>
-                            @endif
+                        <div class="action obat-search-action" style="line-height: 6;">
+                            <button type="button" class="btn btn-primary btn-setobatnya anjay-effect btn-sm" style="font-size: 13px;
+                            line-height: 0;
+                            padding: 10px;"
+                            id="add{{ $obatnya->id }}btn"
+                            data-idobat="{{ $obatnya->id }}"
+                            data-namaobat="{{ $obatnya->nama_obat }}"
+                            data-hargaobat="{{ $obatnya->harga_obats[0]->harga }}"
+                            data-jenispasien="{{ $obatnya->harga_obats[0]->nama_jenis_pasien }}"
+                            data-kategoriobat="{{ $obatnya->kategori_obats->nama_kategori_obat }}"
+                            data-jenispenggunaanobat="{{ $obatnya->jenis_penggunaan_obats->nama_jenis_penggunaan_obat }}"
+                            data-satuanobat="{{ $obatnya->satuan_obats->nama_satuan_obat }}"
+                            >Tambah</button>
                         </div>
                     </li>
                 @endforeach
             @endif
-        </ul>
-    @endif
+        @endif
+    </ul>
     <script>
         $(document).ready(function(){
             // out of .list-of-obat, click anywhere to hide the list
@@ -85,21 +89,26 @@
                 }
             });
 
-            $(document).on('click','.btn-setobatnya', function() {
-                $(this).attr('disabled', true);
-            })
+            console.log('obat search result loaded');
 
-            window.addEventListener('status-nambahin-obat', event => {
-                var statusnya = event.detail.statusnya;
+            window.addEventListener('detectObatYangUdahDitambah', event => {
 
-                if(statusnya == 'selesai') {
-                    $('.btn-setobatnya').attr('disabled', false);
-                } else {
-                    $('.btn-setobatnya').attr('disabled', true);
-                }
+                $('.list-obat-untuk-pasien').find('.obat-item-pasien').each(function() {
 
-                console.log('Status Nambahin Obat: ' + statusnya);
-            })
+                    var idobatyangudahditambah = $(this).data('obat_id')
+
+                    $('.list-of-obat').find('.obatnya').each(function() {
+                        var idobatyangdaripencarian = $(this).data('idobat');
+                        var button = $(this).find('.obat-search-action').find('.btn-setobatnya');
+
+                        if (idobatyangudahditambah == idobatyangdaripencarian) {
+                            button.attr('disabled', true);
+                            button.text('Telah ditambahkan');
+                            console.log('obat sudah ada' + idobatyangudahditambah + ' | ' + idobatyangdaripencarian);
+                        }
+                    })
+                })
+            });
         });
     </script>
 </div>

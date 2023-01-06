@@ -52,6 +52,7 @@
 
     .all-steps {
         text-align: center;
+        margin-top: 1.2rem;
     }
 
     .container {
