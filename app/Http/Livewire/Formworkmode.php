@@ -11,6 +11,7 @@ class Formworkmode extends Component
     public $isMember;
     public $successmessage = '';
     public $dataPasien = null;
+    public $obatUntukPasien = [];
 
     public $formisian = [
         0 => [
@@ -27,7 +28,10 @@ class Formworkmode extends Component
         ],
     ];
 
-    protected $listeners = ['setDataPasien','savePatientData'];
+    protected $listeners = [
+        'setDataPasien', // dari form-step-2
+        'savePatientData', // dari form-step-2
+    ];
 
     public function render()
     {

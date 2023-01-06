@@ -10,7 +10,7 @@
             </div>
             <div style="position: absolute; right: 28px; top: 15px; z-index: 2;">
                 <p style="font-size: 14px; margin: 0;">Pasien ke:</p>
-                <label class="badge bg-primary" style="font-size: 20px;">1</label>
+                <label class="badge bg-success" style="font-size: 20px;">1</label>
             </div>
         </div>
         <div class="card-body" style="padding-bottom: 5px;">

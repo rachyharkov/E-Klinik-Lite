@@ -13,6 +13,22 @@
     background-color: #686868;
 }
 
+ul.list-group {
+    background-color: #f5f5f5;
+}
+
+ul.list-group li:hover {
+    background-color: #e8e8e8;
+}
+
+.theme-dark ul.list-group {
+    background-color: #262631;
+}
+
+.theme-dark ul.list-group li:hover {
+    background-color: #3a3a3a66;
+}
+
 .btn-remove-from-list {
     top: 6px;
     position: absolute;

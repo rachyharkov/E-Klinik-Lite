@@ -35,66 +35,37 @@
         </div>
     </div>
     <div style="width: 75%; height:100%; display: flex; flex-direction: column;">
-        <div class="search-obat-wrapper">
-            <div class="input-group mb-3">
-                <span class="input-group-text" id="basic-addon1" style="line-height: 0;"><i class="bi bi-search"></i></span>
-                <input type="text" class="form-control" placeholder="Masukan Nama Obat" aria-label="Cari Obat" aria-describedby="button-addon2">
-            </div>
-            <ul class="list-group list-group-flush cool-scroll" style="overflow-y: auto;
-            width: 100%;
-            list-style: none;
-            padding: 0;
-            border: 1px solid #efefef;
-            padding-top: 30px;
-            margin-top: -30px;">
-                <li class="list-group obatnya" style="display: flex;
-                flex-direction: row;
-                padding: 7px;
-                width: 100%;
-                justify-content: space-between;">
-                    <div>
-                        <h5>Amoxilin AC 69</h5>
-                        <table style="font-size: 10px;">
-                            <tr>
-                                <td style="font-weight: bold;">Kategori</td>
-                                <td>:</td>
-                                <td>Antibiotik</td>
-                            </tr>
-                            <tr>
-                                <td style="font-weight: bold;">Jenis Penggunaan</td>
-                                <td>:</td>
-                                <td>Obat Luar</td>
-                            </tr>
-                            <tr>
-                                <td style="font-weight: bold;">Satuan</td>
-                                <td>:</td>
-                                <td>Tablet</td>
-                            </tr>
-                            <tr>
-                                <td style="font-weight: bold;">Stok</td>
-                                <td>:</td>
-                                <td>80 <i class="bi bi-check-circle-fill" style="color: green;"></i></td>
-                            </tr>
-                        </table>
-                    </div>
-                    <div class="action" style="line-height: 6;">
-                        <button type="button" class="btn btn-primary btn-sm" style="width: 50px;
-                        height: 50px;
-                        font-size: 35px;
-                        line-height: 0;">+</button>
-                    </div>
-                </li>
-        </div>
+        <livewire:search-obat />
         <ul style="height: 100%; list-style: none;">
-            <li style="text-align: center; color: gray; width: 80%;margin: auto;">
-                <i class="bi bi-capsule" style="font-size: 20px; margin-top: 3rem;"></i><br>
-                Pilih obat untuk pasien dengan mengetik nama obat di kolom pencarian terlebih dahulu lalu pilih
-            </li>
-
+            @if($listobatuntukpasien)
+                @foreach ($listobatuntukpasien as $obatnya)
+                    <li style="width: 100%; display: flex; flex-direction: row; justify-content: space-between; padding: 5px;">
+                        <div>
+                            <h5 style="font-size: 15px;">{{ $obatnya->nama_obat }}</h5>
+                            <input type="text" class="form-control form-control-sm" name="aturan_pakai" placeholder="Input dosis/aturan pakai">
+                            <button class="btn btn-sm btn-danger" wire:click="hapusObat({{ $obatnya->id }})" style="padding: 2px 9px;
+                                font-size: 10px;
+                                height: 20px;">Hapus</button>
+                        </div>
+                        <div>
+                            <h5 style="font-size: 15px; font-weight: 500; text-align: right;">Rp. {{ number_format($obatnya->harga, 0, ',', '.') }}/{{ $obatnya->satuan_obats->nama_satuan_obat }}</h5>
+                            <input type="text" class="form-control form-control-sm" name="jumlah" placeholder="Input jumlah">
+                        </div>
+                    </li>
+                @endforeach
+            @else
+                <li style="text-align: center; color: gray; width: 80%;margin: auto;">
+                    <i class="bi bi-capsule" style="font-size: 20px; margin-top: 3rem;"></i><br>
+                    Pilih obat untuk pasien dengan mengetik nama obat di kolom pencarian terlebih dahulu lalu pilih
+                </li>
+            @endif
         </ul>
         <button type="button" class="btn btn-primary">Simpan</button>
     </div>
-    <div class="row">
 
-    </div>
+    <script>
+        window.addEventListener('status-hapus-obat', event => {
+            alert(event.detail.statusnya);
+        });
+    </script>
 </div>
