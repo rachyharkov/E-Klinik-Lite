@@ -37,8 +37,12 @@
 
             </div>
 
-            <div style="float:right;">
-                <button type="button" class="btn btn-secondary {{ $currentStep <= 1 ? 'd-none' : '' }}" id="prevBtn" wire:click="stepAction(-1)">Sebelumnya</button>
+            <div style="float: right;display: flex;justify-content: space-between;gap: 10px;">
+                @if($currentStep == 3)
+                    <button type="button" class="btn btn-secondary" id="prevBtnWarn" wire:click="$emit('triggerWarning')">Sebelumnya</button>
+                @else
+                    <button type="button" class="btn btn-secondary {{ $currentStep <= 1 ? 'd-none' : '' }}" id="prevBtn" wire:click="stepAction(-1)">Sebelumnya</button>
+                @endif
                 @if($currentStep == 4)
                     <button type="button" class="btn btn-secondary" id="btnEnd" wire:click="stepAction(1)">Simpan</button>
                 @else
@@ -48,4 +52,26 @@
             </div>
         </div>
     </div>
+    @push('js')
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                @this.on('triggerWarning', () => {
+                    Swal.fire({
+                        title: 'Apakah anda yakin?',
+                        text: "Data yang sudah ada tidak akan tersimpan!",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#d33',
+                        cancelButtonColor: '#3085d6',
+                        confirmButtonText: 'Ok'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            @this.stepAction(-1)
+                        }
+                    })
+                })
+            })
+        </script>
+    @endpush
+
 </div>

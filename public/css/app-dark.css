@@ -7413,6 +7413,11 @@ body.theme-dark .swal2-popup, body.theme-dark .swal2-validation-message {
 body.theme-dark .swal2-title {
   color: #fff !important;
 }
+
+body.theme-dark .swal2-styled {
+    margin: .3125em !important;
+}
+
 body.theme-dark .swal2-styled.swal2-confirm {
   background-color: #3699ff !important;
 }
