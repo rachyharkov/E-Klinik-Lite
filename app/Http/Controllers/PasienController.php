@@ -43,27 +43,30 @@ class PasienController extends Controller
         ];
     }
 
-    public function show($id)
-    {
-        //
-    }
-
-    public function edit($id)
-    {
-        //
-    }
-
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'patient_name' => 'required',
+            'jenis_kelamin' => 'required',
+            'patient_address' => 'required',
+            'patient_phone' => 'required',
+            'patient_birth_place' => 'required',
+            'patient_birth_date' => 'required',
+            'jenis_pasien_id' => 'required',
+        ]);
+
+        $datanya = Patient::find($id);
+        $datanya->update($request->all());
+        $datanya->save();
+
+        return [
+            'status' => 'success',
+            'message' => 'Data berhasil diupdate',
+            'your_data' => $datanya
+        ];
     }
 
     public function destroy($id)
-    {
-        //
-    }
-
-    public function search(Request $request)
     {
         //
     }

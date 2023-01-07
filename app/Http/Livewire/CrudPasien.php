@@ -11,14 +11,14 @@ class CrudPasien extends Component
 
     public $menu = null;
     public $titlenya = null;
-    public $datanya = null;
-    public $patient_name, $jenis_kelamin, $patient_birth_place, $patient_birth_date, $patient_address, $patient_phone, $risiko_jatuh, $jenis_pasien_id;
+    public $pasien_id, $patient_name, $jenis_kelamin, $patient_birth_place, $patient_birth_date, $patient_address, $patient_phone, $risiko_jatuh, $jenis_pasien_id;
     public $jenis_pasien_list = null;
     public $action;
 
     protected $listeners = [
         'setMenu',
-        'cleanForm'
+        'cleanForm',
+        'restoreValue'
     ];
 
     public function mount()
@@ -38,6 +38,7 @@ class CrudPasien extends Component
         if($this->menu == 'index') {
             $this->titlenya = 'Data Pasien';
             $this->dispatchBrowserEvent('initTableNya', ['message' => 'Data berhasil dihapus']);
+            $this->cleanForm();
         }
         if($this->menu == 'create') {
             $this->titlenya = 'Tambah';
@@ -46,16 +47,23 @@ class CrudPasien extends Component
         }
         if($this->menu == 'edit') {
             $this->titlenya = 'Edit';
-            $this->datanya = Patient::with([
-                'jenis_pasien'
-            ])->find($id);
+            $dataPasien = Patient::find($id);
+
+            $this->pasien_id = $dataPasien->id;
+            $this->patient_name = $dataPasien->patient_name;
+            $this->jenis_kelamin = $dataPasien->jenis_kelamin;
+            $this->patient_birth_place = $dataPasien->patient_birth_place;
+            $this->patient_birth_date = $dataPasien->patient_birth_date;
+            $this->patient_address = $dataPasien->patient_address;
+            $this->patient_phone = $dataPasien->patient_phone;
+            $this->risiko_jatuh = $dataPasien->risiko_jatuh;
+            $this->jenis_pasien_id = $dataPasien->jenis_pasien_id;
+            $this->jenis_pasien_list = JenisPatient::all();
+
             $this->action = route('pasien.update', $id);
         }
         if($this->menu == 'show') {
             $this->titlenya = 'Detail';
-            $this->datanya = Patient::with([
-                'jenis_pasien'
-            ])->find($id);
         }
     }
 
@@ -69,5 +77,9 @@ class CrudPasien extends Component
         $this->patient_phone = null;
         $this->risiko_jatuh = null;
         $this->jenis_pasien_id = null;
+    }
+
+    public function restoreValue(){
+        $this->setMenu('edit', $this->pasien_id);
     }
 }
