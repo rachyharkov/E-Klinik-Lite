@@ -4,46 +4,34 @@
 
 @section('page-title')
     <div class="row">
-        <div class="col-12 col-md-6 order-md-1 order-last">
-            <h3>Pangkalan Data Pasien</h3>
-        </div>
-        <div class="col-12 col-md-6 order-md-2 order-first">
-            <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item active" aria-current="page">Pasien</li>
-                </ol>
-            </nav>
-        </div>
+
     </div>
 @endsection
 
 
 @section('content')
+    <style>
+        div.dataTables_wrapper div.dataTables_filter {
+            display: inline-block;
+            float: right;
+            margin: 5px;
+        }
+
+        #dataTable_length {
+            display: inline-block;
+            margin: 5px 20px;
+        }
+    </style>
+
     <section class="section">
-        <div class="card">
-            <div class="card-body">
-                <div class="table-responsive">
-                    <table class="table table-sm" id="dataTable" style="width:100%">
-                        <thead>
-                            <tr>
-                                <th>Nama Pasien</th>
-                                <th>JK</th>
-                                <th>Alamat</th>
-                                <th>Risiko Jatuh</th>
-                                <th>Ter-registrasi</th>
-                                <th>Aksi</th>
-                            </tr>
-                        </thead>
-                    </table>
-                </div>
-            </div>
-        </div>
+        <livewire:crud-pasien />
     </section>
 @endsection
 
 @push('js')
     <script>
-        $(document).ready(function() {
+        function loadTable() {
+
             $('#dataTable').DataTable({
                 processing: true,
                 serverSide: true,
@@ -80,7 +68,12 @@
                     },
                     {
                         data: 'created_at',
-                        name: 'created_at'
+                        name: 'created_at',
+                        render: function(data) {
+                            // parse date using luxon
+                            const date = luxon.DateTime.fromISO(data).toFormat('dd LLL yyyy');
+                            return date;
+                        }
                     },
                     {
                         data: 'action',
@@ -90,7 +83,26 @@
                     }
                 ],
                 responsive: true,
+                language: {
+                    lengthMenu: '_MENU_ items/page',
+                },
+                dom: 'Blfrtip',
+                // button with livewire action
+                buttons: [{
+                    text: 'Tambah Pasien',
+                    action: function(e, dt, node, config) {
+                        window.livewire.emit('setMenu', 'create');
+                    }
+                }],
             });
-        });
+        }
+
+        // refresh datatable when livewire action is called
+        window.addEventListener('initTableNya', event => {
+            loadTable();
+        })
+
+        // load datatable
+        loadTable();
     </script>
 @endpush

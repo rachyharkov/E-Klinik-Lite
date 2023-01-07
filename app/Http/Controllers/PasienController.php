@@ -14,7 +14,7 @@ class PasienController extends Controller
             $query = Patient::query();
             return DataTables::of($query)
                 ->addIndexColumn()
-                ->addColumn('action','pasien._action')
+                ->addColumn('action','livewire.pasien._action')
                 ->toJson();
         }
 
