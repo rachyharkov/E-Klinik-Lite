@@ -68,6 +68,13 @@ class PasienController extends Controller
 
     public function destroy($id)
     {
-        //
+        $datanya = Patient::find($id);
+        $datanya->delete();
+
+        return [
+            'status' => 'success',
+            'message' => 'Data berhasil dihapus',
+            'your_data' => $datanya
+        ];
     }
 }

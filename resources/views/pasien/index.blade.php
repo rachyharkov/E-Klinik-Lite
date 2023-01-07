@@ -30,6 +30,49 @@
 
 @push('js')
     <script>
+
+        $(document).on('click', '.btn-delete', function() {
+            var id = $(this).data('id');
+            Swal.fire({
+                title: 'Hapus Data?',
+                text: "Data yang sudah dihapus tidak dapat dikembalikan!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ya, hapus!',
+                preConfirm: function() {
+                    return new Promise(function(resolve) {
+                        $.ajax({
+                            url: "{{ route('pasien.destroy', ':id') }}".replace(':id', id),
+                            type: 'DELETE',
+                            data: {
+                                _token: "{{ csrf_token() }}"
+                            },
+                            success: function(response) {
+                                Swal.fire({
+                                    title: 'Success!',
+                                    text: response.message,
+                                    icon: 'success',
+                                    timer: 3000
+                                })
+                                $('#dataTable').DataTable().ajax.reload();
+                            },
+                            error: function(response) {
+                                Swal.fire({
+                                    title: 'Error!',
+                                    text: response.message,
+                                    icon: 'error',
+                                    timer: 3000
+                                })
+                            }
+                        })
+                    })
+                },
+                allowOutsideClick: false
+            })
+        })
+
         function loadTable() {
 
             $('#dataTable').DataTable({

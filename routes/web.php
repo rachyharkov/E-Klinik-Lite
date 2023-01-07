@@ -31,12 +31,9 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
 
     Route::prefix('pasien')->controller(PasienController::class)->group(function() {
         Route::get('/', 'index')->name('pasien.index');
-        Route::get('create', 'create')->name('pasien.create');
         Route::post('store', 'store')->name('pasien.store');
-        Route::get('edit/{id}', 'edit')->name('pasien.edit');
         Route::post('update/{id}', 'update')->name('pasien.update');
         Route::delete('delete/{id}', 'destroy')->name('pasien.destroy');
-        Route::get('search', 'search')->name('pasien.search');
     });
     Route::get('jenis_pasien')->name('jenis_pasien');
     Route::get('kategori_tindakan')->name('kategori_tindakan');
