@@ -12,10 +12,13 @@ class CrudPasien extends Component
     public $menu = null;
     public $titlenya = null;
     public $datanya = null;
-    public $jenis_pasien = null;
+    public $patient_name, $jenis_kelamin, $patient_birth_place, $patient_birth_date, $patient_address, $patient_phone, $risiko_jatuh, $jenis_pasien_id;
+    public $jenis_pasien_list = null;
+    public $action;
 
-    public $listeners = [
+    protected $listeners = [
         'setMenu',
+        'cleanForm'
     ];
 
     public function mount()
@@ -38,13 +41,15 @@ class CrudPasien extends Component
         }
         if($this->menu == 'create') {
             $this->titlenya = 'Tambah';
-            $this->jenis_pasien = JenisPatient::all();
+            $this->jenis_pasien_list = JenisPatient::all();
+            $this->action = route('pasien.store');
         }
         if($this->menu == 'edit') {
             $this->titlenya = 'Edit';
             $this->datanya = Patient::with([
                 'jenis_pasien'
             ])->find($id);
+            $this->action = route('pasien.update', $id);
         }
         if($this->menu == 'show') {
             $this->titlenya = 'Detail';
@@ -52,5 +57,17 @@ class CrudPasien extends Component
                 'jenis_pasien'
             ])->find($id);
         }
+    }
+
+    public function cleanForm()
+    {
+        $this->patient_name = null;
+        $this->jenis_kelamin = null;
+        $this->patient_birth_place = null;
+        $this->patient_birth_date = null;
+        $this->patient_address = null;
+        $this->patient_phone = null;
+        $this->risiko_jatuh = null;
+        $this->jenis_pasien_id = null;
     }
 }

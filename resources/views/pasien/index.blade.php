@@ -94,6 +94,9 @@
                         window.livewire.emit('setMenu', 'create');
                     }
                 }],
+                order: [
+                    [4, 'desc']
+                ]
             });
         }
 

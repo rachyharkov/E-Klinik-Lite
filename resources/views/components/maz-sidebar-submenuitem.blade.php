@@ -2,8 +2,10 @@
 
 @php
 $active = null;
-$uri1 = request()->segment(2);
-if ($uri1 == strtolower($name)) {
+$uri1 = request()->segment(1);
+$lastSegment = collect(explode('/', $link))->last();
+
+if ($uri1 == $lastSegment) {
     $active = true;
 }
 

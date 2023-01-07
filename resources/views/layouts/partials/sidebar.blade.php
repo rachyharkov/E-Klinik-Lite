@@ -7,8 +7,7 @@
     <hr class="sidebar-divider">
 
     <x-maz-sidebar-item name="Pasien" :link="route('workmode')" icon="bi bi-person-bounding-box">
-        <x-maz-sidebar-submenuitem name="Member" :link="route('pasien.index')" icon="bi bi-person"></x-maz-sidebar-submenuitem>
-        <x-maz-sidebar-submenuitem name="Temporary" :link="route('pasien.index')" icon="bi bi-person"></x-maz-sidebar-submenuitem>
+        <x-maz-sidebar-submenuitem name="Daftar Pasien" :link="route('pasien.index')" icon="bi bi-person"></x-maz-sidebar-submenuitem>
         <x-maz-sidebar-submenuitem name="Jenis Pasien" :link="route('jenis_pasien')" icon="bi bi-person"></x-maz-sidebar-submenuitem>
     </x-maz-sidebar-item>
     <x-maz-sidebar-item name="Tindakan" icon="bi bi-clipboard2-plus">

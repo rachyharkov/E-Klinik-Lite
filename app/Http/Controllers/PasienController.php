@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Patient;
 use Illuminate\Http\Request;
+use RealRashid\SweetAlert\Facades\Alert;
 use Yajra\DataTables\Facades\DataTables;
 
 class PasienController extends Controller
@@ -21,14 +22,25 @@ class PasienController extends Controller
         return view('pasien.index');
     }
 
-    public function create()
-    {
-        return view('pasien.create');
-    }
-
     public function store(Request $request)
     {
-        //
+        $datanya = $request->validate([
+            'patient_name' => 'required',
+            'jenis_kelamin' => 'required',
+            'patient_address' => 'required',
+            'patient_phone' => 'required',
+            'patient_birth_place' => 'required',
+            'patient_birth_date' => 'required',
+            'jenis_pasien_id' => 'required',
+        ]);
+
+        Patient::create($datanya);
+
+        return [
+            'status' => 'success',
+            'message' => 'Data berhasil disimpan',
+            'your_data' => $datanya
+        ];
     }
 
     public function show($id)

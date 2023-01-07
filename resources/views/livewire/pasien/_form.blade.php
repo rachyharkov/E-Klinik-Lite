@@ -1,5 +1,5 @@
 <div class="patient-detail">
-    <form class="form-pasien-edit" wire:submit.prevent="savePatientData">
+    <form class="form-pasien" action="{{ $action }}" method="POST">
         <div class="form-body">
             <div class="row">
                 <div class="col-md-6">
@@ -8,13 +8,13 @@
                         <label>Nama Pasien</label>
                     </div>
                     <div class="col-12 form-group">
-                        <input type="text" id="patient-name" class="form-control" name="patient-name">
+                        <input type="text" id="patient-name" class="form-control" wire:model.defer="patient_name" name="patient_name">
                     </div>
                     <div class="col-md-4">
                         <label>Jenis Kelamin</label>
                     </div>
                     <div class="col-12 form-group">
-                        <select class="form-select" id="jenis-kelamin" name="jenis-kelamin">
+                        <select class="form-select" id="jenis-kelamin" wire:model.defer="jenis_kelamin" name="jenis_kelamin">
                             <option value="Laki-laki">Laki-laki</option>
                             <option value="Perempuan">Perempuan</option>
                         </select>
@@ -25,17 +25,17 @@
                     <div class="col-12 form-group">
                         <div class="row">
                             <div class="col-md-6">
-                                <input type="text" id="tempat-lahir" class="form-control" name="tempat-lahir">
+                                <input type="text" id="tempat-lahir" class="form-control" wire:model.defer="patient_birth_place" name="patient_birth_place">
                             </div>
                             <div class="col-md-6">
-                                <input type="date" id="tanggal-lahir" class="form-control" name="tanggal-lahir">
+                                <input type="date" id="tanggal-lahir" class="form-control" wire:model.defer="patient_birth_date" name="patient_birth_date">
                             </div>
                         </div>
                     </div>
                     <div class="col-12 form-group">
                         <div class="form-check">
                             <div class="checkbox">
-                                <input type="checkbox" id="risiko-jatuh" class="form-check-input" checked="" name="risiko-jatuh">
+                                <input type="checkbox" id="risiko-jatuh" class="form-check-input" checked="" wire:model.defer="risiko_jatuh" name="risiko_jatuh">
                                 <label for="checkbox1">Risiko Jatuh</label>
                             </div>
                         </div>
@@ -44,10 +44,10 @@
                         <label>Status Pasien</label>
                     </div>
                     <div class="col-12 form-group">
-                        @foreach ($jenis_pasien as $jp)
+                        @foreach ($jenis_pasien_list as $jp)
                         {{-- create radio --}}
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" name="jenis-pasien" id="jenis-pasien-{{ $jp->id }}"
+                                <input class="form-check-input" type="radio" wire:model.defer="jenis_pasien_id" name="jenis_pasien_id" id="jenis-pasien-{{ $jp->id }}"
                                     value="{{ $jp->id }}">
                                 <label class="form-check-label" for="jenis-pasien-{{ $jp->id }}">
                                     {{ $jp->nama_jenis_pasien }}
@@ -62,13 +62,13 @@
                         <label>Alamat</label>
                     </div>
                     <div class="col-12 form-group">
-                        <textarea class="form-control" id="alamat" name="alamat" rows="3"></textarea>
+                        <textarea class="form-control" id="patient_address" wire:model.defer="patient_address" name="patient_address" rows="3"></textarea>
                     </div>
                     <div class="col-md-4">
                         <label>No. Telepon</label>
                     </div>
                     <div class="col-12 form-group">
-                        <input type="text" id="no-telp" class="form-control" name="no-telp">
+                        <input type="text" id="no-telp" class="form-control" wire:model.defer="patient_phone" name="patient_phone">
                     </div>
                 </div>
                 <div class="col-sm-12 d-flex justify-content-end">
@@ -79,4 +79,61 @@
             </div>
         </div>
     </form>
+
+    <script>
+        $(document).ready(function() {
+
+            //in form-pasien, if user start typing on specified only with invalid-feedback, then remove invalid-feedback
+            $('.form-pasien').on('keyup', '.is-invalid', function() {
+                $(this).removeClass('is-invalid');
+            });
+
+
+            $('.form-pasien').submit(function(e) {
+                e.preventDefault();
+                var form = $(this);
+                var url = form.attr('action');
+                var data = form.serialize();
+                data += '&_token={{ csrf_token() }}';
+                $.ajax({
+                    type: "POST",
+                    url: url,
+                    data: data,
+                    success: function(response) {
+                        // trigger event setMenu with parameter 'index'
+                        window.livewire.emit('setMenu', 'index');
+                        window.livewire.emit('cleanForm');
+
+                        Swal.fire({
+                            title: 'Success!',
+                            text: response.message,
+                            icon: 'success',
+                            confirmButtonText: 'OK',
+                            timer: 3000
+                        })
+                    },
+                    error: function(response) {
+                        console.log(response);
+                        Swal.fire({
+                            title: 'Error!',
+                            text: response.responseJSON.message,
+                            icon: 'error',
+                            confirmButtonText: 'OK'
+                        })
+                        // make input to red
+                        $.each(response.responseJSON.errors, function(key, value) {
+                            var input = $('[name=' + key + ']');
+                            input.addClass('is-invalid');
+                            input.closest('.form-group').find('.invalid-feedback').remove();
+                            input.closest('.form-group').append(
+                                '<div class="invalid-feedback">' + value + '</div>'
+                            );
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+
+
 </div>
