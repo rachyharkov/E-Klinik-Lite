@@ -1,5 +1,4 @@
 <div class="height: 100%;">
-    <h4 class="text-left">Gejala</h4>
     <form id="form-konsultasi">
         <textarea id="summernoteGejala" placeholder="Tulis pesan anda disini"></textarea>
         <br>
@@ -18,7 +17,7 @@
         $(document).ready(function() {
             $("#summernoteGejala").summernote({
                 tabsize: 2,
-                height: 400,
+                height: 450,
                 disableResizeEditor: true,
                 callbacks: {
                     onBlur: function() {

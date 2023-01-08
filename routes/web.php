@@ -35,12 +35,10 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
         Route::post('store', 'store')->name('pasien.store');
         Route::post('update/{id}', 'update')->name('pasien.update');
         Route::delete('delete/{id}', 'destroy')->name('pasien.destroy');
-    });
-    Route::prefix('jenis_pasien')->controller(JenisPasienController::class)->group(function() {
-        Route::get('/', 'index')->name('jenis_pasien.index');
-        Route::post('store', 'store')->name('jenis_pasien.store');
-        Route::post('update/{id}', 'update')->name('jenis_pasien.update');
-        Route::delete('delete/{id}', 'destroy')->name('jenis_pasien.destroy');
+
+        Route::prefix('jenis_pasien')->controller(JenisPasienController::class)->group(function() {
+            Route::get('/', 'index')->name('jenis_pasien.index');
+        });
     });
     Route::get('kategori_tindakan')->name('kategori_tindakan');
     Route::get('tindakan')->name('tindakan');

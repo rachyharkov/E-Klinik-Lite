@@ -10,7 +10,11 @@ class Formworkmode extends Component
     public $currentStep = 1;
     public $isMember;
     public $successmessage = '';
+
     public $dataPasien = null;
+    public $dataLayananAtauTindakan = null;
+    public $dataObat = null;
+    public $dataKonsultasi = null;
 
     public $formisian = [
         0 => [
@@ -30,6 +34,9 @@ class Formworkmode extends Component
     protected $listeners = [
         'setDataPasien', // dari form-step-2
         'savePatientData', // dari form-step-2
+        'saveDataLayananAtauTindakan', // dari form-step-3
+        'saveDataObat', // dari form-step-3
+        'saveDataKonsultasi', // dari form-step-3
     ];
 
     public function render()
@@ -44,6 +51,9 @@ class Formworkmode extends Component
 
         if ($this->currentStep == 1) {
             $this->dataPasien = null;
+            $this->dataLayananAtauTindakan = null;
+            $this->dataObat = null;
+            $this->dataKonsultasi = null;
         }
 
         if ($this->currentStep > 4) {
@@ -81,6 +91,23 @@ class Formworkmode extends Component
         $value = $data['value'];
 
         $this->dataPasien[$property_name] = $value;
-        // $this->checkDebug();
+    }
+
+    public function saveDataLayananAtauTindakan($data)
+    {
+        $this->dataLayananAtauTindakan = $data;
+        dd($this->dataLayananAtauTindakan);
+    }
+
+    public function saveDataObat($data)
+    {
+        $this->dataObat = $data;
+        dd($this->dataObat);
+    }
+
+    public function saveDataKonsultasi($data)
+    {
+        $this->dataKonsultasi = $data;
+        dd($this->dataKonsultasi);
     }
 }

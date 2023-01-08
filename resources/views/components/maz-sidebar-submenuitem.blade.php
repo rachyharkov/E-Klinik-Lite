@@ -2,7 +2,7 @@
 
 @php
 $active = null;
-$uri1 = request()->segment(1);
+$uri1 = last(request()->segments());
 $lastSegment = collect(explode('/', $link))->last();
 
 if ($uri1 == $lastSegment) {

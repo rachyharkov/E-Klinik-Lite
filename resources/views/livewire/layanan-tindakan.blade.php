@@ -10,7 +10,32 @@
             height: 100%;" id="form-layanan">
                 <h4 style="margin-left: 1rem;margin-top: 1rem;">Tindakan Untuk Pasien</h4>
                 <div class="list-of-tindakan-terhadap-pasien" style="height: 100%;">
-                    <ul class="droppable cool-scroll" style="height: 50vh;width: 100%;padding: 0 10px;overflow-y:scroll"></ul>
+                    <ul class="droppable cool-scroll" style="height: 50vh;width: 100%;padding: 0 10px;overflow-y:scroll">
+                        @if($tindakanuntukpasien)
+                            @foreach ($detailTindakan as $tindakannya)
+                                <li class="draggable-element tindakan-item d-flex" style="position: relative;
+                                padding: 4px 0px;">
+                                    <input type="hidden" name="tindakan_id[]" value="{{ $tindakannya->id }}">
+                                    <div style="margin: auto 5px;">
+                                        <i class="bi bi-grip-vertical" style="color: gray;"></i>
+                                    </div>
+                                    <div style="font-size: 14px;
+                                    max-width: 103px;
+                                    word-break: break-all;
+                                    font-weight: bold;">
+                                        {{ $tindakannya->nama_tindakan }}
+                                    </div>
+                                    <div style="position: absolute;
+                                    right: 11px;
+                                    bottom: 2px;
+                                    font-size: 11px;">
+                                        Rp.{{ $tindakannya->tarif }}
+                                    </div>
+                                    <span class="badge bg-danger btn-remove-from-list"><i class="bi bi-x"></i></span>
+                                </li>
+                            @endforeach
+                        @endif
+                    </ul>
                 </div>
                 <button type="submit" class="btn btn-primary" style="width: 100%;">Simpan</button>
             </form>
@@ -59,6 +84,17 @@
 
             $(document).on('submit', '#form-layanan', function(e) {
                 e.preventDefault();
+                var dataTindakan = [];
+                $('.list-of-tindakan-terhadap-pasien .tindakan-item').each(function() {
+                    var tindakan_id = $(this).find('input[name="tindakan_id[]"]').val();
+
+                    dataTindakan.push(tindakan_id)
+                })
+
+                console.log(dataTindakan);
+
+                window.livewire.emit('saveDataTindakan', dataTindakan);
+
                 Toast.fire({
                     icon: 'success',
                     title: 'Berhasil menyimpan data'

@@ -2,29 +2,53 @@
     <div style="width: 25%;height: 100%;display: flex;flex-direction: column;" class="inputan-dummy-form-resep">
         <div class="d-flex" style="justify-content: space-between">
             <div class="input-group input-group-sm" style="width: 49%;">
-                <input type="text" class="form-control" placeholder="Berat" aria-label="Berat Badan" aria-describedby="input-bb" onkeyup="$('#bb_pasien').val($(this).val())">
+                <input type="text" class="form-control" placeholder="Berat" aria-label="Berat Badan" aria-describedby="input-bb" onkeyup="$('#bb_pasien').val($(this).val())" value="{{ $obatuntukpasien ? $obatuntukpasien['berat_badan'] : '' }}">
                 <span class="input-group-text" id="input-bb">KG</span>
             </div>
             <div class="input-group input-group-sm" style="width: 49%;">
-                <input type="text" class="form-control" placeholder="Tinggi" aria-label="Berat Badan" aria-describedby="input-bb" onkeyup="$('#tb_pasien').val($(this).val())">
+                <input type="text" class="form-control" placeholder="Tinggi" aria-label="Berat Badan" aria-describedby="input-bb" onkeyup="$('#tb_pasien').val($(this).val())" value="{{ $obatuntukpasien ? $obatuntukpasien['tinggi_badan'] : '' }}">
                 <span class="input-group-text" id="input-bb">CM</span>
             </div>
         </div>
         <div class="form-group mt-2">
             <label for="alergi-vertical">Alergi Obat</label>
-            <input type="text" id="alergi-vertical" class="form-control form-control-sm" name="alergi_obat" onkeyup="$('#alergi_obat').val($(this).val())">
+            <input type="text" id="alergi-vertical" class="form-control form-control-sm" name="alergi_obat" value="{{ $obatuntukpasien ? $obatuntukpasien['alergi_obat'] : '' }}" onkeyup="$('#alergi_obat').val($(this).val())">
         </div>
         <div class="form-group mt-2">
             <label for="fungsi_ginjal-vertical">Ganguan Fungsi Ginjal?</label>
-            <select class="form-select form-control-sm" id="fungsi_ginjal-vertical" name="ganguan_fungsi_ginjal" onchange="$('#ganguan_fungsi_ginjal').val($(this).val())">
-                <option value="0">Tidak</option>
-                <option value="1">Ya</option>
+            <select class="form-select form-control-sm" id="fungsi_ginjal-vertical" name="gangguan_fungsi_ginjal" onchange="$('#gangguan_fungsi_ginjal').val($(this).val())">
+                <option value="0"
+                @php
+                    if($obatuntukpasien) {
+                        if($obatuntukpasien['gangguan_fungsi_ginjal'] == 0) {
+                            echo 'selected';
+                        }
+                    }
+                @endphp
+                >Tidak</option>
+                <option value="1"
+                @php
+                    if($obatuntukpasien) {
+                        if($obatuntukpasien['gangguan_fungsi_ginjal'] == 1) {
+                            echo 'selected';
+                        }
+                    }
+                @endphp
+                >Ya</option>
             </select>
         </div>
         <div class="form-group">
             <div class="form-check form-check-sm">
                 <div class="custom-control custom-checkbox">
-                    <input type="checkbox" class="form-check-input form-check-primary form-check-glow" name="puasa" id="pasienBerpuasa" style="transform: scale(0.7) translate(4px, -5px);" onchange="$('#puasa').val($(this).is(':checked') ? 1 : 0)">
+                    <input type="checkbox" class="form-check-input form-check-primary form-check-glow" name="puasa" id="pasienBerpuasa" style="transform: scale(0.7) translate(4px, -5px);" onchange="$('#puasa').val($(this).is(':checked') ? 1 : 0)"
+                    @php
+                        if($obatuntukpasien) {
+                            if($obatuntukpasien['puasa'] == 1) {
+                                echo 'checked';
+                            }
+                        }
+                    @endphp
+                    >
                     <label class="form-check-label" for="pasienBerpuasa">Puasa?</label>
                 </div>
             </div>
@@ -36,16 +60,39 @@
     <div style="width: 75%; height:100%; display: flex; flex-direction: column;">
         <livewire:search-obat />
         <form id="form-resep" style="display: flex;flex-direction: column;height: 91%;">
-            <input type="hidden" name="bb_pasien" id="bb_pasien" value="">
-            <input type="hidden" name="tb_pasien" id="tb_pasien" value="">
-            <input type="hidden" name="alergi_obat" id="alergi_obat" value="">
-            <input type="hidden" name="ganguan_fungsi_ginjal" id="ganguan_fungsi_ginjal" value="">
-            <input type="hidden" name="puasa" id="puasa" value="">
+            <input type="hidden" name="bb_pasien" id="bb_pasien" value="{{ $obatuntukpasien ? $obatuntukpasien['berat_badan'] : '' }}">
+            <input type="hidden" name="tb_pasien" id="tb_pasien" value="{{ $obatuntukpasien ? $obatuntukpasien['tinggi_badan'] : '' }}">
+            <input type="hidden" name="alergi_obat" id="alergi_obat" value="{{ $obatuntukpasien ? $obatuntukpasien['alergi_obat'] : '' }}">
+            <input type="hidden" name="gangguan_fungsi_ginjal" id="gangguan_fungsi_ginjal" value="{{ $obatuntukpasien ? $obatuntukpasien['gangguan_fungsi_ginjal'] : '' }}">
+            <input type="hidden" name="puasa" id="puasa" value="{{ $obatuntukpasien ? $obatuntukpasien['puasa'] : 0 }}">
             <ul style="height: 90%;list-style: none;padding: 0;overflow-y: scroll;" class="list-obat-untuk-pasien cool-scroll">
-                <li style="text-align: center; color: gray; width: 80%;margin: auto;">
-                    <i class="bi bi-capsule" style="font-size: 20px; margin-top: 3rem;"></i><br>
-                    Pilih obat untuk pasien dengan mengetik nama obat di kolom pencarian terlebih dahulu lalu pilih
-                </li>
+                @if($obatuntukpasien)
+                    @foreach ($detailObat as $key => $item)
+                        <li class="obat-item-pasien garis-pemisah-custom" style="width: 100%;display: flex;flex-direction: row;justify-content: space-between;padding: 13px 5px;" data-obat_id="{{ $item->id }}">
+                            <div>
+                                <h5 style="font-size: 15px;">{{ $item->nama_obat }}</h5>
+                                <input type="text" class="form-control form-control-sm" name="aturan_pakai[]" placeholder="Input dosis/aturan pakai" value="{{ $obatuntukpasien['obat'][$key]['aturan_pakai'] }}">
+                                <input type="hidden" class="form-control form-control-sm" name="obat_id[]" value="{{ $item->id }}">
+                            </div>
+                            <div>
+                                <h5 style="font-size: 15px; font-weight: 500; text-align: right;">Rp. {{ $item->harga_obats[0]->harga }}/{{ $item->satuan_obats->nama_satuan_obat }}</h5>
+                                <div class="form-group has-icon-right" style="transform: scale(0.7);width: 97px;margin: 0;float: right;">
+                                    <div style="position: relative;">
+                                        <input type="text" class="form-control" name="jumlah[]" placeholder="Jumlah" style="text-align: right;padding-right: 27px;" value="{{ $obatuntukpasien['obat'][$key]['jumlah'] }}">
+                                        <div class="form-control-icon" style="padding-left: 0px;padding-right: 5px;">
+                                            <i class="bi bi-x"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    @endforeach
+                @else
+                    <li style="text-align: center; color: gray; width: 80%;margin: auto;">
+                        <i class="bi bi-capsule" style="font-size: 20px; margin-top: 3rem;"></i><br>
+                        Pilih obat untuk pasien dengan mengetik nama obat di kolom pencarian terlebih dahulu lalu pilih
+                    </li>
+                @endif
             </ul>
             <button type="submit" class="btn btn-primary" style="height: 8%;">Simpan</button>
         </form>
@@ -67,13 +114,14 @@
                     <li class="obat-item-pasien garis-pemisah-custom" style="width: 100%;display: flex;flex-direction: row;justify-content: space-between;padding: 13px 5px;" data-obat_id="${obat_id}">
                         <div>
                             <h5 style="font-size: 15px;">${nama_obat}</h5>
-                            <input type="text" class="form-control form-control-sm" name="aturan_pakai" placeholder="Input dosis/aturan pakai">
+                            <input type="text" class="form-control form-control-sm" name="aturan_pakai[]" placeholder="Input dosis/aturan pakai">
+                            <input type="hidden" class="form-control form-control-sm" name="obat_id[]" value="${obat_id}">
                         </div>
                         <div>
                             <h5 style="font-size: 15px; font-weight: 500; text-align: right;">Rp. ${harga}/${satuan_obat}</h5>
                             <div class="form-group has-icon-right" style="transform: scale(0.7);width: 97px;margin: 0;float: right;">
                                 <div style="position: relative;">
-                                    <input type="text" class="form-control" placeholder="Jumlah" style="text-align: right;padding-right: 27px;">
+                                    <input type="text" class="form-control" name="jumlah[]" placeholder="Jumlah" style="text-align: right;padding-right: 27px;">
                                     <div class="form-control-icon" style="padding-left: 0px;padding-right: 5px;">
                                         <i class="bi bi-x"></i>
                                     </div>
@@ -141,6 +189,34 @@
 
             $(document).on('submit', '#form-resep', function(e) {
                 e.preventDefault();
+
+                var form = $(this);
+
+                var obat = [];
+
+                form.find('.obat-item-pasien').each(function() {
+                    var obat_id = $(this).data('obat_id');
+                    var jumlah = $(this).find('input[name="jumlah[]"]').val();
+                    var aturan_pakai = $(this).find('input[name="aturan_pakai[]"]').val();
+
+                    obat.push({
+                        'obat_id': obat_id,
+                        'jumlah': jumlah,
+                        'aturan_pakai': aturan_pakai,
+                    })
+                })
+
+                var data = {
+                    'obat': obat,
+                    'berat_badan': form.find('#bb_pasien').val(),
+                    'tinggi_badan': form.find('#tb_pasien').val(),
+                    'alergi_obat': form.find('#alergi_obat').val(),
+                    'gangguan_fungsi_ginjal': form.find('#gangguan_fungsi_ginjal').val(),
+                    'puasa': form.find('#puasa').val(),
+                }
+
+                window.livewire.emit('setDataObat', data);
+
                 udahDiSaveApaBelom('udah', 'tab-eresep-tab')
                 Toast.fire({
                     icon: 'success',
