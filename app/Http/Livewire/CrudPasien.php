@@ -63,7 +63,18 @@ class CrudPasien extends Component
             $this->action = route('pasien.update', $id);
         }
         if($this->menu == 'show') {
-            $this->titlenya = 'Detail';
+            $this->titlenya = 'Detail Pasien';
+            $dataPasien = Patient::find($id);
+
+            $this->pasien_id = $dataPasien->id;
+            $this->patient_name = $dataPasien->patient_name;
+            $this->jenis_kelamin = $dataPasien->jenis_kelamin;
+            $this->patient_birth_place = $dataPasien->patient_birth_place;
+            $this->patient_birth_date = $dataPasien->patient_birth_date;
+            $this->patient_address = $dataPasien->patient_address;
+            $this->patient_phone = $dataPasien->patient_phone;
+            $this->risiko_jatuh = $dataPasien->risiko_jatuh;
+            $this->jenis_pasien_id = $dataPasien->jenis_pasien_id;
         }
     }
 
