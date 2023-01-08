@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\JenisPasienController;
 use App\Http\Controllers\PasienController;
 use App\Http\Controllers\WorkmodeController;
 
@@ -35,7 +36,12 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
         Route::post('update/{id}', 'update')->name('pasien.update');
         Route::delete('delete/{id}', 'destroy')->name('pasien.destroy');
     });
-    Route::get('jenis_pasien')->name('jenis_pasien');
+    Route::prefix('jenis_pasien')->controller(JenisPasienController::class)->group(function() {
+        Route::get('/', 'index')->name('jenis_pasien.index');
+        Route::post('store', 'store')->name('jenis_pasien.store');
+        Route::post('update/{id}', 'update')->name('jenis_pasien.update');
+        Route::delete('delete/{id}', 'destroy')->name('jenis_pasien.destroy');
+    });
     Route::get('kategori_tindakan')->name('kategori_tindakan');
     Route::get('tindakan')->name('tindakan');
     Route::get('produsen')->name('produsen');
@@ -43,6 +49,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('obat')->name('obat');
     Route::get('satuan_obat')->name('satuan_obat');
     Route::get('jenis_penggunaan_obat')->name('jenis_penggunaan_obat');
+    Route::get('laporan')->name('laporan');
 
 
 });
