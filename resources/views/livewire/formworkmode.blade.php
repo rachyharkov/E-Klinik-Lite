@@ -71,6 +71,15 @@
                     })
                 })
             })
+
+            function udahDiSaveApaBelom(status, apanya) {
+                if(status == 'belum') {
+                    $(`#${apanya} .save-status`).html('<i class="bi bi-exclamation-circle-fill"></i>');
+                } else {
+                    $(`#${apanya} .save-status`).html('');
+                }
+            }
+
         </script>
     @endpush
 

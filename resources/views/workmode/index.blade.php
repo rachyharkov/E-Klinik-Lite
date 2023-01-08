@@ -21,6 +21,7 @@
 @section('content')
     @include('workmode.style')
     <section class="section">
+        {{ inDevelopmentBanner() }}
         <div class="row">
             <div class="col-9">
                 <h1 id="title-form"></h1>

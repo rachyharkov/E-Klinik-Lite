@@ -1,22 +1,22 @@
 <div style="height: 100%; display: flex; gap: 15px;">
-    <div style="width: 25%;height: 100%;display: flex;flex-direction: column;">
+    <div style="width: 25%;height: 100%;display: flex;flex-direction: column;" class="inputan-dummy-form-resep">
         <div class="d-flex" style="justify-content: space-between">
             <div class="input-group input-group-sm" style="width: 49%;">
-                <input type="text" class="form-control" placeholder="Berat" aria-label="Berat Badan" aria-describedby="input-bb">
+                <input type="text" class="form-control" placeholder="Berat" aria-label="Berat Badan" aria-describedby="input-bb" onkeyup="$('#bb_pasien').val($(this).val())">
                 <span class="input-group-text" id="input-bb">KG</span>
             </div>
             <div class="input-group input-group-sm" style="width: 49%;">
-                <input type="text" class="form-control" placeholder="Tinggi" aria-label="Berat Badan" aria-describedby="input-bb">
+                <input type="text" class="form-control" placeholder="Tinggi" aria-label="Berat Badan" aria-describedby="input-bb" onkeyup="$('#tb_pasien').val($(this).val())">
                 <span class="input-group-text" id="input-bb">CM</span>
             </div>
         </div>
         <div class="form-group mt-2">
             <label for="alergi-vertical">Alergi Obat</label>
-            <input type="text" id="alergi-vertical" class="form-control form-control-sm" name="alergi_obat">
+            <input type="text" id="alergi-vertical" class="form-control form-control-sm" name="alergi_obat" onkeyup="$('#alergi_obat').val($(this).val())">
         </div>
         <div class="form-group mt-2">
             <label for="fungsi_ginjal-vertical">Ganguan Fungsi Ginjal?</label>
-            <select class="form-select form-control-sm" id="fungsi_ginjal-vertical" name="ganguan_fungsi_ginjal">
+            <select class="form-select form-control-sm" id="fungsi_ginjal-vertical" name="ganguan_fungsi_ginjal" onchange="$('#ganguan_fungsi_ginjal').val($(this).val())">
                 <option value="0">Tidak</option>
                 <option value="1">Ya</option>
             </select>
@@ -24,25 +24,31 @@
         <div class="form-group">
             <div class="form-check form-check-sm">
                 <div class="custom-control custom-checkbox">
-                    <input type="checkbox" class="form-check-input form-check-primary form-check-glow" checked="" name="puasa" id="pasienBerpuasa" style="transform: scale(0.7) translate(4px, -5px);">
+                    <input type="checkbox" class="form-check-input form-check-primary form-check-glow" name="puasa" id="pasienBerpuasa" style="transform: scale(0.7) translate(4px, -5px);" onchange="$('#puasa').val($(this).is(':checked') ? 1 : 0)">
                     <label class="form-check-label" for="pasienBerpuasa">Puasa?</label>
                 </div>
             </div>
         </div>
         <div class="receipt-preview" style="height: 100%;border: 1px gray dashed;">
             <p>Tinjau Resep</p>
-
         </div>
     </div>
     <div style="width: 75%; height:100%; display: flex; flex-direction: column;">
         <livewire:search-obat />
-        <ul style="height: 100%; list-style: none; padding: 0;overflow-y: scroll;" class="list-obat-untuk-pasien cool-scroll">
-            <li style="text-align: center; color: gray; width: 80%;margin: auto;">
-                <i class="bi bi-capsule" style="font-size: 20px; margin-top: 3rem;"></i><br>
-                Pilih obat untuk pasien dengan mengetik nama obat di kolom pencarian terlebih dahulu lalu pilih
-            </li>
-        </ul>
-        <button type="button" class="btn btn-primary">Simpan</button>
+        <form id="form-resep" style="display: flex;flex-direction: column;height: 91%;">
+            <input type="hidden" name="bb_pasien" id="bb_pasien" value="">
+            <input type="hidden" name="tb_pasien" id="tb_pasien" value="">
+            <input type="hidden" name="alergi_obat" id="alergi_obat" value="">
+            <input type="hidden" name="ganguan_fungsi_ginjal" id="ganguan_fungsi_ginjal" value="">
+            <input type="hidden" name="puasa" id="puasa" value="">
+            <ul style="height: 90%;list-style: none;padding: 0;overflow-y: scroll;" class="list-obat-untuk-pasien cool-scroll">
+                <li style="text-align: center; color: gray; width: 80%;margin: auto;">
+                    <i class="bi bi-capsule" style="font-size: 20px; margin-top: 3rem;"></i><br>
+                    Pilih obat untuk pasien dengan mengetik nama obat di kolom pencarian terlebih dahulu lalu pilih
+                </li>
+            </ul>
+            <button type="submit" class="btn btn-primary" style="height: 8%;">Simpan</button>
+        </form>
     </div>
 
     <script>
@@ -92,6 +98,7 @@
                         $('.list-obat-untuk-pasien').append(str);
                     }
                 }
+                udahDiSaveApaBelom('belum','tab-eresep-tab')
             })
 
             $(document).on('click', '.btn-hapus-obat', function() {
@@ -103,7 +110,17 @@
                         Pilih obat untuk pasien dengan mengetik nama obat di kolom pencarian terlebih dahulu lalu pilih
                     </li>`)
                 }
+                udahDiSaveApaBelom('belum', 'tab-eresep-tab')
             })
+
+            // detect any changes inside form form-resep
+            $('#form-resep').on('keyup change paste', 'input, select, textarea', function(){
+                udahDiSaveApaBelom('belum', 'tab-eresep-tab')
+            });
+
+            $('.inputan-dummy-form-resep').on('keyup change paste', 'input, select, textarea, checkbox', function(){
+                udahDiSaveApaBelom('belum', 'tab-eresep-tab')
+            });
 
             $.contextMenu({
                 selector: '.obat-item-pasien',
@@ -121,6 +138,15 @@
                     },
                 }
             });
+
+            $(document).on('submit', '#form-resep', function(e) {
+                e.preventDefault();
+                udahDiSaveApaBelom('udah', 'tab-eresep-tab')
+                Toast.fire({
+                    icon: 'success',
+                    title: 'Resep berhasil disimpan'
+                })
+            })
         })
 
     </script>

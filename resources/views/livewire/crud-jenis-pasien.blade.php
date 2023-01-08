@@ -138,14 +138,7 @@
             <h3 class="card-title">{{ $titlenya }}</h3>
         </div>
         <div class="card-body">
-            <div class="alert alert-info alert-dismissible show fade" role="alert">
-                <div style="margin-bottom: 0.50rem;">
-                    <i class="bi bi-star" style="font-size: 28px;margin-right: 8px;"></i>
-                    <strong>Sedang dalam proses Development!</strong>
-                </div>
-                Beberapa Fitur yang terdapat pada halaman ini tidak tersedia pada versi E-Klinik yang anda gunakan (ditandai dengan simbol <i class="bi bi-tools"></i>), silahkan hubungi developer untuk menjadi yang awal mencoba fitur early-development pada halaman ini agar bisa anda gunakan. Informasi lebih lanjut mengenai fitur ini bisa anda lihat pada <a href="#">Dokumentasi Early Feature</a> E-Klinik.
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
+            {{ inDevelopmentBanner() }}
             <div class="container">
                 <div class="row">
                     <div class="col-lg-3 col-md-3 col-xs-6 ">
@@ -162,10 +155,10 @@
                                         <i class="bi bi-three-dots-vertical"></i>
                                     </button>
                                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                        <li><a class="dropdown-item" href="#">Ganti Warna {{ inDevelopmentWarning() }}</a></li>
-                                        <li><a class="dropdown-item" href="#">Migrasi {{ inDevelopmentWarning() }}</a></li>
-                                        <li><a class="dropdown-item" href="#">Ubah Nama {{ inDevelopmentWarning() }}</a></li>
-                                        <li><a class="dropdown-item" href="#">Hapus {{ inDevelopmentWarning() }}</a></li>
+                                        <li><a class="dropdown-item" href="#">Ganti Warna {{ inDevelopmentIndicator() }}</a></li>
+                                        <li><a class="dropdown-item" href="#">Migrasi {{ inDevelopmentIndicator() }}</a></li>
+                                        <li><a class="dropdown-item" href="#">Ubah Nama {{ inDevelopmentIndicator() }}</a></li>
+                                        <li><a class="dropdown-item" href="#">Hapus {{ inDevelopmentIndicator() }}</a></li>
                                     </ul>
                                 </div>
                                 <div class="box member-item" style="background-color: {{ $count['color'] }}">

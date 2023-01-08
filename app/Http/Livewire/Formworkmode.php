@@ -11,7 +11,6 @@ class Formworkmode extends Component
     public $isMember;
     public $successmessage = '';
     public $dataPasien = null;
-    public $obatUntukPasien = [];
 
     public $formisian = [
         0 => [

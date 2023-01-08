@@ -5,7 +5,7 @@ for(var i = 0; i < sidebarItems.length; i++) {
     let sidebarItem = sidebarItems[i];
 	sidebarItems[i].querySelector('.sidebar-link').addEventListener('click', function(e) {
         e.preventDefault();
-        
+
         let submenu = sidebarItem.querySelector('.submenu');
         if(submenu.style.display == 'none') submenu.classList.add('active')
         else submenu.classList.remove('active')
@@ -50,7 +50,7 @@ if(typeof PerfectScrollbar == 'function') {
 document.querySelectorAll('.sidebar-item').forEach(sidebarItem => {
     sidebarItem.querySelectorAll('.sidebar-link').forEach(sidebarLink => {
         if(sidebarLink.getAttribute('href') == window.location.href) sidebarItem.classList.add('active')
-        
+
     })
 });
 
