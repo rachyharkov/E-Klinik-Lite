@@ -18,16 +18,6 @@
         </div>
         @if ($nama_pasien_yang_dicari != "")
             <ul class="list-group search-pasien-results cool-scroll">
-                <li class="list-group list-group-item pasien-item" wire:loading>
-                    <div class="row">
-                        <div class="col-12">
-                            {{-- progress bar animated--}}
-                            <div class="progress" style="height: 5px;">
-                                <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div>
-                            </div>
-                        </div>
-                    </div>
-                </li>
                 @if($searchPasienResults->isEmpty())
                     <li class="list-group list-group-item pasien-item">
                         <div class="row">

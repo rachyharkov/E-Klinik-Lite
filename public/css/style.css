@@ -146,3 +146,37 @@ ul.list-group li:hover {
         rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
     border-radius: 13px;
 }
+
+.theme-dark #form-konsultasi > div > div.ck.ck-editor__top.ck-reset_all > div > div.ck.ck-sticky-panel__content > div {
+    background: #1e1e2a;
+    border-color: #47475840;
+}
+
+.theme-dark .ck-rounded-corners .ck.ck-button, .ck-rounded-corners a.ck.ck-button, .ck.ck-button.ck-rounded-corners, a.ck.ck-button.ck-rounded-corners {
+    color: white;
+}
+
+.theme-dark #form-konsultasi > div > div.ck.ck-editor__main > div {
+    background: #1e1e2a;
+    border-color: #47475840;
+}
+
+.theme-dark .ck.ck-button.ck-on, a.ck.ck-button.ck-on {
+    background-color: #5c5c5c;
+}
+
+.theme-dark .ck.ck-button:not(.ck-disabled):hover, a.ck.ck-button:not(.ck-disabled):hover {
+    background: #343a40;
+}
+
+.theme-dark .ck.ck-button.ck-on:not(.ck-disabled):hover, a.ck.ck-button.ck-on:not(.ck-disabled):hover {
+    background: #5555559e;
+}
+
+.theme-dark .ck.ck-list {
+    background: #1e1e2d;
+}
+
+.theme-dark .ck.ck-list__item .ck-button:hover:not(.ck-disabled) {
+    background: #343a40;
+}
