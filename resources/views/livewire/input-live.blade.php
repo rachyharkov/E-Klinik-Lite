@@ -2,11 +2,16 @@
     @if($edit_status == true)
         <div style="display: flex;">
             @if($type_input == 'select')
-                <select class="form-control" name="{{ $property_name }}" wire:model.debounce.700ms="valuenya">
+                <select class="form-control selectTize" name="{{ $property_name }}" wire:model.debounce.700ms="valuenya" style="width: 200px;">
                     @foreach ($options as $option)
                         <option value="{{ $option }}">{{ $option }}</option>
                     @endforeach
                 </select>
+                <script>
+                    $(".selectTize").selectize();
+                </script>
+            @elseif($type_input == 'date')
+                <input type="date" class="form-control" name="{{ $property_name }}" wire:model.debounce.700ms="valuenya" />
             @else
                 <input type="text" class="form-control" name="{{ $property_name }}" style="padding: 0 9px;" wire:model.debounce.700ms="valuenya" />
             @endif

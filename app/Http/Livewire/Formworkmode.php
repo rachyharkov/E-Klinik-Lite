@@ -4,6 +4,7 @@ namespace App\Http\Livewire;
 
 use App\Models\Obat;
 use App\Models\Patient;
+use App\Models\Regency;
 use App\Models\Tindakan;
 use Livewire\Component;
 
@@ -13,10 +14,20 @@ class Formworkmode extends Component
     public $isMember;
     public $successmessage = '';
 
-    public $dataPasien = null;
+    public $dataPasien = [
+        'id' => null,
+        'patient_name' => null,
+        'patient_birth_place' => null,
+        'patient_birth_date' => null,
+        'jenis_kelamin' => 'Laki-laki',
+        'patient_address' => null,
+        'patient_phone' => null,
+        'risiko_jatuh' => 0
+    ];
     public $dataLayananAtauTindakan = null;
     public $dataObatdanResep = null;
     public $dataKonsultasi = null;
+    public $listDataDaerah = null;
 
     public $formisian = [
         0 => [
@@ -41,6 +52,21 @@ class Formworkmode extends Component
         'saveDataKonsultasi', // dari form-step-3
     ];
 
+    protected $messages = [
+        'dataPasien.patient_name.required' => 'Nama Pasien harus diisi',
+        'dataPasien.patient_birth_place.required' => 'Tempat Lahir Pasien harus diisi',
+        'dataPasien.patient_birth_date.required' => 'Tanggal Lahir Pasien harus diisi',
+        'dataPasien.jenis_kelamin.required' => 'Jenis Kelamin Pasien harus diisi',
+        'dataPasien.patient_address.required' => 'Alamat Pasien harus diisi',
+        'dataPasien.patient_phone.required' => 'Nomor Telepon Pasien harus diisi',
+        'dataPasien.risiko_jatuh.required' => 'Risiko Jatuh Pasien harus diisi',
+    ];
+
+    public function mount()
+    {
+        $this->listDataDaerah = Regency::all();
+    }
+
     public function render()
     {
         return view('livewire.formworkmode');
@@ -49,10 +75,12 @@ class Formworkmode extends Component
     public function stepAction($step)
     {
 
+        $this->checkPasienDataValidation();
+
         $this->currentStep += $step;
 
         if ($this->currentStep == 1) {
-            $this->dataPasien = null;
+            $this->cleanDataPasien();
             $this->dataLayananAtauTindakan = null;
             $this->dataObatdanResep = null;
             $this->dataKonsultasi = null;
@@ -63,6 +91,16 @@ class Formworkmode extends Component
             $this->dataObatdanResep = null;
             $this->dataKonsultasi = null;
         }
+
+        // if($this->currentStep == 4) {
+        //     dd([
+        //         'isMember' => $this->isMember,
+        //         'dataPasien' => $this->dataPasien,
+        //         'dataLayananAtauTindakan' => $this->dataLayananAtauTindakan,
+        //         'dataObatdanResep' => $this->dataObatdanResep,
+        //         'dataKonsultasi' => $this->dataKonsultasi,
+        //     ]);
+        // }
 
         if ($this->currentStep > 4) {
             $this->submitForm();
@@ -85,7 +123,7 @@ class Formworkmode extends Component
     public function clearForm()
     {
         $this->isMember = '';
-        $this->dataPasien = null;
+        $this->cleanDataPasien();
     }
 
     public function setDataPasien($data)
@@ -116,7 +154,9 @@ class Formworkmode extends Component
         $tempDataObatdanResep = [];
         foreach ($data['obat'] as $value) {
             $dataObat = Obat::with([
-                'harga_obats',
+                'harga_obats' => function ($query) {
+                    $query->where('id_jenis_pasien', 1); // 1 = umum
+                },
                 'satuan_obats',
             ])->where('id', $value['obat_id'])->first();
 
@@ -135,5 +175,32 @@ class Formworkmode extends Component
     {
         $this->dataKonsultasi = htmlentities($data);
         // dd($this->dataKonsultasi);
+    }
+
+    public function checkPasienDataValidation()
+    {
+        if ($this->currentStep == 2) {
+            $this->validate([
+                'dataPasien.patient_name' => 'required',
+                'dataPasien.patient_birth_place' => 'required',
+                'dataPasien.patient_birth_date' => 'required',
+                'dataPasien.jenis_kelamin' => 'required',
+                'dataPasien.patient_address' => 'required',
+                'dataPasien.patient_phone' => 'required',
+                'dataPasien.risiko_jatuh' => 'required'
+            ]);
+        }
+    }
+
+    public function cleanDataPasien() {
+        $this->dataPasien = [
+            'patient_name' => null,
+            'patient_birth_place' => null,
+            'patient_birth_date' => null,
+            'jenis_kelamin' => 'Laki-laki',
+            'patient_address' => null,
+            'patient_phone' => null,
+            'risiko_jatuh' => 0
+        ];
     }
 }

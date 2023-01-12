@@ -14,6 +14,18 @@
     </style>
 
     <h4 class="card-title">Detail Kunjungan</h4>
+    <div class="info-pasien">
+        <i class="bi bi-person-vcard-fill" style="opacity: 0.1;
+        position: absolute;
+        z-index: 0;
+        font-size: 10rem;
+        left: -11px;
+        top: -52px;"></i>
+        <?= $dataPasien['risiko_jatuh'] ? '<span class="badge bg-danger" style="float: right;">Risiko Jatuh</span>' : '' ?>
+        <h5 style="font-weight: 400; margin: 0;">{{ $dataPasien['patient_name'] }} <span><?= $dataPasien['jenis_kelamin'] == 'Laki-laki' ? '<i class="bi bi-gender-male"></i>' : '<i class="bi bi-gender-female"></i>' ?></span></h5>
+        <p class="m-0">{{ App\Models\Regency::find($dataPasien['patient_birth_place'])->first()->name.'/'.$dataPasien['patient_birth_date'] }}</p>
+        <p class="m-0">{{ $dataPasien['patient_address'] }}</p>
+    </div>
     <div wire:ignore>
         <ul class="nav nav-tabs" id="tab" role="tablist" aria-orientation="vertical" style="margin-bottom: 13px;">
             <li class="nav-item" role="presentation">

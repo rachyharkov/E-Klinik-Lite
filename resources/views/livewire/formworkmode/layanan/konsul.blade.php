@@ -13,6 +13,13 @@
         <textarea id="catatanKonsul">
             @if($dataKonsultasi != null)
                 {{ html_entity_decode($dataKonsultasi) }}
+            @else
+                <h3>Keluhan</h3>
+                <p><i>ketik keluhan pasien disini...</i></p>
+                <h3>Diagnosa</h3>
+                <p><i>ketik diagnosa disini...</i></p>
+                <h3>Tindakan/Hasil</h3>
+                <p><i>Ketik analisa terhadap tindakan yang diberikan, saran, hasil, dan lain-lain disini</i></p>
             @endif
         </textarea>
         <br>
