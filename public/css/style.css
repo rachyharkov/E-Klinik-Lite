@@ -180,3 +180,30 @@ ul.list-group li:hover {
 .theme-dark .ck.ck-list__item .ck-button:hover:not(.ck-disabled) {
     background: #343a40;
 }
+
+
+.page-heading {
+    margin: 0 2rem !important;
+    flex: 1 0 auto;
+}
+
+#main-content {
+    padding: 0 2rem !important;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+#main {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+#app {
+    height: 100%;
+}
+
+body {
+    height: 100vh;
+}

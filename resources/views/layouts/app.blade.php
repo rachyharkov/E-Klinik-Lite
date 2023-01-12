@@ -19,9 +19,6 @@
                 <div id="main-content" style="padding-top: 0;">
 
                     <div class="page-heading">
-                        <div class="page-title">
-                            @yield('page-title')
-                        </div>
                         @yield('content')
                     </div>
 

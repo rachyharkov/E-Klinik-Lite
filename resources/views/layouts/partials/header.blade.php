@@ -10,6 +10,7 @@
                 aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
+            <span style="padding: 0px 1rem;margin-top: 5px;"><h4 class="m-0">@yield('page-title')</h4></span>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
 
