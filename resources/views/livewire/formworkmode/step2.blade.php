@@ -21,7 +21,7 @@
                 <div class="row">
                     <div class="col-12">
                         <livewire:search-patient />
-                        @if($dataPasien['id'] != null)
+                        @if(isset($dataPasien['id']))
                             <div class="patient-detail">
                                 <table class="table table-editable" style="margin-top: 2rem;">
                                     <input type="hidden" name="id" value="{{ $dataPasien['id'] }}">
@@ -74,7 +74,7 @@
                                                 <div class="form-check">
                                                     <div class="checkbox">
                                                         <input wire:model.debounce.800ms="dataPasien.risiko_jatuh" type="checkbox" id="risiko-jatuh" class="form-check-input" checked="" name="risiko_jatuh">
-                                                        <label for="risiko-jatuh">Risiko Jatuh</label>
+                                                        <label for="risiko-jatuh" style="margin-left: 6px;margin-top: 5px;">Risiko Jatuh</label>
                                                     </div>
                                                 </div>
                                             </td>

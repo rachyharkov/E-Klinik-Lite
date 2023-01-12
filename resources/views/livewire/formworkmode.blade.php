@@ -1,6 +1,6 @@
-<div>
+<div style="height: 100%;">
     {{-- Success is as dangerous as failure. --}}
-    <div class="card">
+    <div class="card" style="height: 100%;">
         <div class="card-header-formnya">
             <div class="all-steps" id="all-steps">
                 <span class="step {{ $currentStep == 1 ? 'active' : '' }} {{ $formisian[0]['done'] == true ? 'finish' : '' }}"></span>

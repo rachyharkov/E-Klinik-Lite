@@ -74,8 +74,10 @@ class Formworkmode extends Component
 
     public function stepAction($step)
     {
+        if($step > 0) {
+            $this->checkPasienDataValidation();
+        }
 
-        $this->checkPasienDataValidation();
 
         $this->currentStep += $step;
 

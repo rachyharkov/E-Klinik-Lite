@@ -1,4 +1,4 @@
-<div class="tab" id="step-3" style="height: 100%;">
+<div class="tab" id="step-3" style="height: 100%;display: flex;flex-direction: column;">
 
     <style>
         .save-status i {
@@ -23,10 +23,10 @@
         top: -52px;"></i>
         <?= $dataPasien['risiko_jatuh'] ? '<span class="badge bg-danger" style="float: right;">Risiko Jatuh</span>' : '' ?>
         <h5 style="font-weight: 400; margin: 0;">{{ $dataPasien['patient_name'] }} <span><?= $dataPasien['jenis_kelamin'] == 'Laki-laki' ? '<i class="bi bi-gender-male"></i>' : '<i class="bi bi-gender-female"></i>' ?></span></h5>
-        <p class="m-0">{{ App\Models\Regency::find($dataPasien['patient_birth_place'])->first()->name.'/'.$dataPasien['patient_birth_date'] }}</p>
-        <p class="m-0">{{ $dataPasien['patient_address'] }}</p>
+        <p class="m-0" style="font-size: 11px;">{{ App\Models\Regency::find($dataPasien['patient_birth_place'])->first()->name.'/'.$dataPasien['patient_birth_date'] }}</p>
+        <p class="m-0" style="font-size: 11px;">{{ $dataPasien['patient_address'] }}</p>
     </div>
-    <div wire:ignore>
+    <div wire:ignore style="height: 100%;">
         <ul class="nav nav-tabs" id="tab" role="tablist" aria-orientation="vertical" style="margin-bottom: 13px;">
             <li class="nav-item" role="presentation">
                 <a class="nav-link active" id="tab-rekammedis-tab" data-bs-toggle="pill" href="#tab-rekammedis"
@@ -52,7 +52,7 @@
                     tabindex="-1">Rujukan Keluar <span class="save-status"></span></a>
             </li>
         </ul>
-        <div class="tab-content" id="tab-tabContent" style="height: 65vh;">
+        <div class="tab-content" id="tab-tabContent" style="height: 90%;">
             <div style="height:100%;" class="tab-pane fade active show" id="tab-rekammedis" role="tabpanel"
                 aria-labelledby="tab-rekammedis-tab">
                 @include('livewire.formworkmode.layanan.rekam-medis')

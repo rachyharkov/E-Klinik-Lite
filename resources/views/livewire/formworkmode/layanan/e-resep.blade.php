@@ -57,15 +57,24 @@
             <p>Tinjau Resep</p>
         </div>
     </div>
-    <div style="width: 75%; height:100%; display: flex; flex-direction: column;">
+    <div style="width: 75%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;">
         <livewire:search-obat />
-        <form id="form-resep" style="display: flex;flex-direction: column;height: 91%;">
+        <form id="form-resep" style="display: flex;
+        flex-direction: column;
+        height: 100%;">
             <input type="hidden" name="bb_pasien" id="bb_pasien" value="{{ $dataObatdanResep ? $dataObatdanResep['berat_badan'] : '' }}">
             <input type="hidden" name="tb_pasien" id="tb_pasien" value="{{ $dataObatdanResep ? $dataObatdanResep['tinggi_badan'] : '' }}">
             <input type="hidden" name="alergi_obat" id="alergi_obat" value="{{ $dataObatdanResep ? $dataObatdanResep['alergi_obat'] : '' }}">
             <input type="hidden" name="gangguan_fungsi_ginjal" id="gangguan_fungsi_ginjal" value="{{ $dataObatdanResep ? $dataObatdanResep['gangguan_fungsi_ginjal'] : '' }}">
             <input type="hidden" name="puasa" id="puasa" value="{{ $dataObatdanResep ? $dataObatdanResep['puasa'] : 0 }}">
-            <ul style="height: 90%;list-style: none;padding: 0;overflow-y: scroll;" class="list-obat-untuk-pasien cool-scroll">
+            <ul style="height: 34vh;
+            list-style: none;
+            padding: 0;
+            overflow-y: scroll;
+            flex: 1 0 auto;" class="list-obat-untuk-pasien cool-scroll">
                 @if($dataObatdanResep)
                     @foreach ($dataObatdanResep['obat'] as $key => $item)
                         <li class="obat-item-pasien garis-pemisah-custom" style="width: 100%;display: flex;flex-direction: row;justify-content: space-between;padding: 13px 5px;" data-obat_id="{{ $item['id'] }}">

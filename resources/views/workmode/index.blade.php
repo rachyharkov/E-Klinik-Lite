@@ -6,14 +6,9 @@
 
 @section('content')
     @include('workmode.style')
-    <section class="section">
+    <section class="section" style="height: 100%;">
         {{ inDevelopmentBanner() }}
-        <div class="row">
-            <div class="col-12" id="form-work-mode-wrapper">
-                <h1 id="title-form"></h1>
-                <livewire:formworkmode />
-            </div>
-        </div>
+        <livewire:formworkmode />
     </section>
     <div id="pasien-terlayani-wrapper" class="cool-scroll">
         <button class="btn btn-primary" id="toggle-patient-done-list" type="button"></button>
@@ -101,6 +96,8 @@
             $(document).on('click', '#toggle-patient-done-list', function() {
                 $('#pasien-terlayani-wrapper').toggleClass('hide');
             })
+
+            $('#toggle-patient-done-list').click()
         });
 
     </script>

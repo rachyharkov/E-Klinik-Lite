@@ -9,8 +9,8 @@
             flex-direction: column;
             height: 100%;" id="form-layanan">
                 <h4 style="margin-left: 1rem;margin-top: 1rem;">Tindakan Untuk Pasien</h4>
-                <div class="list-of-tindakan-terhadap-pasien" style="height: 100%;">
-                    <ul class="droppable cool-scroll" style="height: 50vh;width: 100%;padding: 0 10px;overflow-y:scroll">
+                <div class="list-of-tindakan-terhadap-pasien" style="height: 36vh;">
+                    <ul class="droppable cool-scroll" style="height: 100%;width: 100%;padding: 0 10px;overflow-y: scroll;flex: 1;">
                         @if($dataLayananAtauTindakan)
                             @foreach ($dataLayananAtauTindakan as $tindakannya)
                                 <li class="draggable-element tindakan-item d-flex" style="position: relative;

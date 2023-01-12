@@ -6,7 +6,7 @@
         }
 
         .ck-editor__editable {
-            height: 450px;
+            height: 350px;
         }
     </style>
     <form id="form-konsultasi" style="height: 100%; display: flex; flex-direction: column;">
@@ -22,19 +22,7 @@
                 <p><i>Ketik analisa terhadap tindakan yang diberikan, saran, hasil, dan lain-lain disini</i></p>
             @endif
         </textarea>
-        <br>
-        <table>
-            <tbody>
-                <tr>
-                    <td>
-                        <h5 style="margin: 0;">Tindakan</h5>
-                    </td>
-                    <td>:</td>
-                    <td>Tidak ada Tindakan, klik disini untuk mulai menambahkan</td>
-                </tr>
-            </tbody>
-        </table>
-        <button type="submit" class="btn btn-primary" style="width: 100%;margin-top: 30px;">Simpan</button>
+        <button type="submit" class="btn btn-primary" style="width: 100%;">Simpan</button>
     </form>
     <script>
         $(document).ready(function() {
