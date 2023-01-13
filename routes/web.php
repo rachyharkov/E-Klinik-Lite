@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\JenisPasienController;
 use App\Http\Controllers\PasienController;
+use App\Http\Controllers\RekamMedis;
 use App\Http\Controllers\WorkmodeController;
 
 /*
@@ -40,6 +41,11 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
             Route::get('/', 'index')->name('jenis_pasien.index');
         });
     });
+
+    Route::prefix('rekam_medis')->controller(RekamMedis::class)->group(function() {
+        Route::get('/{id}', 'index')->name('rekam_medis.index');
+    });
+
     Route::get('kategori_tindakan')->name('kategori_tindakan');
     Route::get('tindakan')->name('tindakan');
     Route::get('produsen')->name('produsen');

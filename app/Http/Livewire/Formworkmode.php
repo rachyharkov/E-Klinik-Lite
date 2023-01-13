@@ -149,10 +149,35 @@ class Formworkmode extends Component
     public function clearForm()
     {
         $this->isMember = '';
+        $this->dataPasien = [
+            'id' => null,
+            'patient_name' => null,
+            'patient_birth_place' => null,
+            'patient_birth_date' => null,
+            'jenis_kelamin' => 'Laki-laki',
+            'patient_address' => null,
+            'patient_phone' => null,
+            'risiko_jatuh' => 0
+        ];
         $this->dataTindakan = null;
+        $this->dataKeadaanPasien = [
+            'berat_badan' => null,
+            'tinggi_badan' => null,
+            'alergi_obat' => 'Tidak ada',
+            'gangguan_fungsi_ginjal' => 0,
+            'puasa' => 0
+        ];
         $this->dataObatdanResep = null;
-        $this->dataKonsultasi = null;
+        $this->dataKonsultasi = '';
         $this->listDataDaerah = null;
+        $this->dataPembayaran = [
+            'totalBiaya' => 0,
+            'diskonBiaya' => 0,
+            'dibayarPasien' => 0,
+            'sisaTagihan' => 0,
+            'dibayarOleh' => null,
+            'metodePembayaran' => null,
+        ];
         $this->cleanDataPasien();
     }
 
@@ -276,9 +301,10 @@ class Formworkmode extends Component
                     HistoryObat::create([
                         'patient_visit_id' => $getLatestIdPatientVisit,
                         'obat_id' => $value['id'],
-                        'jumlah' => $value['jumlah'],
                         'aturan_pakai' => $value['aturan_pakai'],
                         'harga' => $value['harga_obats'][0]['harga'],
+                        'jumlah' => $value['jumlah'],
+                        'total' => $value['harga_obats'][0]['harga'] * $value['jumlah'],
                         'created_at' => Carbon::now(),
                         'updated_at' => Carbon::now(),
                     ]);

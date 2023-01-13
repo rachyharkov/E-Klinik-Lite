@@ -104,10 +104,10 @@
                                 showConfirmButton: false,
                                 timer: 1500
                             })
+
+                            $('#btn-refresh-antrian-list').trigger('click');
                         })
                     }
-
-
                 })
             })
 

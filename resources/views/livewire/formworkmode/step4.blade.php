@@ -21,7 +21,7 @@
     $dataPembayaran['totalBiaya'] -= $dataPembayaran['diskonBiaya'];
     ?>
 
-    <div class="invoice-wrapper" style="max-width: 880px; margin: auto; box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px; padding: 0 2rem 1rem 2rem; border-top: 12px solid rgb(43, 39, 99); overflow: hidden;">
+    <div class="invoice-wrapper" style="max-width: 920px; margin: auto; box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px; padding: 0 2rem 1rem 2rem; border-top: 12px solid rgb(43, 39, 99); overflow: hidden;">
         <div class="row" style="position: relative;">
             <div class="col-sm-6" style="z-index: 2;">
                 <img src="{{ asset('images/logo/logo_accent.svg') }}" alt="logo" style="width: 80px; height: 100px;margin-left: 15px;">

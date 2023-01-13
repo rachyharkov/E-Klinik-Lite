@@ -1,4 +1,19 @@
 /* hide scroll on .cool-scroll if mouse not hovering inside */
+
+.slide-to-left {
+    animation: slide-to-left 0.5s ease-in-out;
+    transition: all 0.5s ease-in-out;
+}
+
+@keyframes slide-to-left {
+    0% {
+        transform: translateX(100%);
+    }
+    100% {
+        transform: translateX(0);
+    }
+}
+
 .cool-scroll {
     overflow-y: scroll;
     overflow-x: hidden;
@@ -100,6 +115,7 @@ ul.list-group li:hover {
 
 #pasien-terlayani-wrapper {
     position: fixed;
+    width: 365px;
     right: 0;
     top: 85px;
     overflow-y: scroll;
@@ -110,7 +126,7 @@ ul.list-group li:hover {
 }
 
 #pasien-terlayani-wrapper.hide {
-    right: -400px;
+    right: -380px;
 }
 
 #toggle-patient-done-list {
