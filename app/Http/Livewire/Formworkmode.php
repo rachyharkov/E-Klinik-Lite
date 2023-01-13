@@ -2,10 +2,17 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\DataPembayaran;
+use App\Models\HistoryKeadaanPatient;
+use App\Models\HistoryKonsul;
+use App\Models\HistoryObat;
+use App\Models\HistoryTindakan;
+use App\Models\HutangPiutang;
 use App\Models\Obat;
-use App\Models\Patient;
+use App\Models\PatientVisit;
 use App\Models\Regency;
 use App\Models\Tindakan;
+use Carbon\Carbon;
 use Livewire\Component;
 
 class Formworkmode extends Component
@@ -24,10 +31,26 @@ class Formworkmode extends Component
         'patient_phone' => null,
         'risiko_jatuh' => 0
     ];
-    public $dataLayananAtauTindakan = null;
-    public $dataObatdanResep = null;
+    public $dataKeadaanPasien = [
+        'berat_badan' => null,
+        'tinggi_badan' => null,
+        'alergi_obat' => 'Tidak ada',
+        'gangguan_fungsi_ginjal' => 0,
+        'puasa' => 0
+    ];
+    public $dataTindakan = [];
+    public $dataObatdanResep = [];
     public $dataKonsultasi = null;
     public $listDataDaerah = null;
+    public $biayaKonsultasi = 15000;
+    public $dataPembayaran = [
+        'totalBiaya' => 0,
+        'diskonBiaya' => 0,
+        'dibayarPasien' => 0,
+        'sisaTagihan' => 0,
+        'dibayarOleh' => null,
+        'metodePembayaran' => null,
+    ];
 
     public $formisian = [
         0 => [
@@ -47,8 +70,9 @@ class Formworkmode extends Component
     protected $listeners = [
         'setDataPasien', // dari form-step-2
         'savePatientData', // dari form-step-2
-        'saveDataLayananAtauTindakan', // dari form-step-3
+        'savedataTindakan', // dari form-step-3
         'saveDataObatResep', // dari form-step-3
+        'saveDataKeadaanPasien',
         'saveDataKonsultasi', // dari form-step-3
     ];
 
@@ -83,13 +107,13 @@ class Formworkmode extends Component
 
         if ($this->currentStep == 1) {
             $this->cleanDataPasien();
-            $this->dataLayananAtauTindakan = null;
+            $this->dataTindakan = null;
             $this->dataObatdanResep = null;
             $this->dataKonsultasi = null;
         }
 
-        if($this->currentStep == 3 && !$this->dataLayananAtauTindakan && !$this->dataObatdanResep && !$this->dataKonsultasi){
-            $this->dataLayananAtauTindakan = null;
+        if($this->currentStep == 3 && !$this->dataTindakan && !$this->dataObatdanResep && !$this->dataKonsultasi){
+            $this->dataTindakan = null;
             $this->dataObatdanResep = null;
             $this->dataKonsultasi = null;
         }
@@ -98,22 +122,22 @@ class Formworkmode extends Component
         //     dd([
         //         'isMember' => $this->isMember,
         //         'dataPasien' => $this->dataPasien,
-        //         'dataLayananAtauTindakan' => $this->dataLayananAtauTindakan,
+        //         'dataTindakan' => $this->dataTindakan,
         //         'dataObatdanResep' => $this->dataObatdanResep,
         //         'dataKonsultasi' => $this->dataKonsultasi,
         //     ]);
         // }
 
         if ($this->currentStep > 4) {
-            $this->submitForm();
+            $this->saveDataKunjungan();
+            $this->dariAwalLagi();
         }
     }
 
-    public function submitForm()
+    public function dariAwalLagi()
     {
         $this->successmessage = 'Form Successfully Submitted!';
         $this->clearForm();
-
         $this->currentStep = 1;
     }
 
@@ -125,6 +149,10 @@ class Formworkmode extends Component
     public function clearForm()
     {
         $this->isMember = '';
+        $this->dataTindakan = null;
+        $this->dataObatdanResep = null;
+        $this->dataKonsultasi = null;
+        $this->listDataDaerah = null;
         $this->cleanDataPasien();
     }
 
@@ -141,42 +169,47 @@ class Formworkmode extends Component
         $this->dataPasien[$property_name] = $value;
     }
 
-    public function saveDataLayananAtauTindakan($data)
+    public function savedataTindakan($data)
     {
         $dataTindakan = null;
         foreach ($data as $value) {
             $dataTindakan[] = Tindakan::find($value);
 
         }
-        $this->dataLayananAtauTindakan = $dataTindakan;
+        $this->dataTindakan = $dataTindakan;
     }
 
     public function saveDataObatResep($data)
     {
         $tempDataObatdanResep = [];
-        foreach ($data['obat'] as $value) {
-            $dataObat = Obat::with([
-                'harga_obats' => function ($query) {
-                    $query->where('id_jenis_pasien', 1); // 1 = umum
-                },
-                'satuan_obats',
-            ])->where('id', $value['obat_id'])->first();
 
-            $dataObat['jumlah'] = $value['jumlah'];
-            $dataObat['aturan_pakai'] = $value['aturan_pakai'];
+        if (isset($data)) {
+            foreach ($data as $value) {
+                $dataObat = Obat::with([
+                    'harga_obats' => function ($query) {
+                        $query->where('id_jenis_pasien', 1); // 1 = umum
+                    },
+                    'satuan_obats',
+                ])->where('id', $value['obat_id'])->first();
 
-            $tempDataObatdanResep[] = $dataObat;
+                $dataObat['jumlah'] = $value['jumlah'];
+                $dataObat['aturan_pakai'] = $value['aturan_pakai'];
+
+                $tempDataObatdanResep[] = $dataObat;
+            }
         }
 
-        $data['obat'] = $tempDataObatdanResep;
+        $this->dataObatdanResep = $tempDataObatdanResep;
+    }
 
-        $this->dataObatdanResep = $data;
+    public function saveDataKeadaanPasien($data)
+    {
+        $this->dataKeadaanPasien = $data;
     }
 
     public function saveDataKonsultasi($data)
     {
         $this->dataKonsultasi = htmlentities($data);
-        // dd($this->dataKonsultasi);
     }
 
     public function checkPasienDataValidation()
@@ -192,6 +225,124 @@ class Formworkmode extends Component
                 'dataPasien.risiko_jatuh' => 'required'
             ]);
         }
+    }
+
+    // public function hitungTagihan() {
+
+    //     $totalBiayaTemp = 0;
+
+    //     foreach ($this->dataTindakan as $value) {
+    //         $totalBiayaTemp += $value['harga'];
+    //     }
+
+    //     foreach ($this->dataObatdanResep['obat'] as $value) {
+    //         $totalBiayaTemp += $value['harga_obats'][0]['harga'] * $value['jumlah'];
+    //     }
+
+    //     $totalBiayaTemp += $this->biayaKonsultasi; // biaya konsultasi
+
+    //     $totalBiayaTemp -= $this->diskonBiaya; // diskon
+
+    //     $this->dataPembayaran['totalBiaya'] = $totalBiayaTemp;
+    // }
+
+    public function saveDataKunjungan() {
+
+        if($this->dataPasien != null) {
+
+            PatientVisit::create([
+                'patient_id' => $this->dataPasien['id'],
+                'urutan' => PatientVisit::where('id', $this->dataPasien['id'])->count() + 1,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ]);
+
+            $getLatestIdPatientVisit = PatientVisit::latest()->first()->id;
+
+            if(!empty($this->dataTindakan)) {
+                foreach ($this->dataTindakan as $value) {
+                    HistoryTindakan::create([
+                        'patient_visit_id' => $getLatestIdPatientVisit,
+                        'tindakan_id' => $value['id'],
+                        'harga' => $value['tarif'],
+                        'created_at' => Carbon::now(),
+                        'updated_at' => Carbon::now(),
+                    ]);
+                }
+            }
+
+            if(!empty($this->dataObatdanResep)) {
+                foreach ($this->dataObatdanResep as $value) {
+                    HistoryObat::create([
+                        'patient_visit_id' => $getLatestIdPatientVisit,
+                        'obat_id' => $value['id'],
+                        'jumlah' => $value['jumlah'],
+                        'aturan_pakai' => $value['aturan_pakai'],
+                        'harga' => $value['harga_obats'][0]['harga'],
+                        'created_at' => Carbon::now(),
+                        'updated_at' => Carbon::now(),
+                    ]);
+                }
+            }
+
+            HistoryKeadaanPatient::create([
+                'patient_visit_id' => $getLatestIdPatientVisit,
+                'berat_badan' => $this->dataKeadaanPasien['berat_badan'],
+                'tinggi_badan' => $this->dataKeadaanPasien['tinggi_badan'],
+                'alergi_obat' => $this->dataKeadaanPasien['alergi_obat'],
+                'gangguan_fungsi_ginjal' => $this->dataKeadaanPasien['gangguan_fungsi_ginjal'],
+                'puasa' => $this->dataKeadaanPasien['puasa'],
+                'risiko_jatuh' => $this->dataPasien['risiko_jatuh'],
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ]);
+
+            HistoryKonsul::create([
+                'patient_visit_id' => $getLatestIdPatientVisit,
+                'konsultasi' => $this->dataKonsultasi,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ]);
+
+            $statusTagihan = 'Lunas';
+            $sisaTagihan = $this->dataPembayaran['totalBiaya'] - $this->dataPembayaran['diskonBiaya'] - $this->dataPembayaran['dibayarPasien'];
+
+            if($sisaTagihan > 0) {
+                $statusTagihan = 'Belum Lunas';
+            }
+
+            DataPembayaran::create([
+                'patient_visit_id' => $getLatestIdPatientVisit,
+                'metode_pembayaran_id' => $this->dataPembayaran['metodePembayaran'],
+                'total_biaya' => $this->dataPembayaran['totalBiaya'],
+                'diskon' => $this->dataPembayaran['diskonBiaya'],
+                'dibayar' => $this->dataPembayaran['dibayarPasien'],
+                'sisa_tagihan' => $sisaTagihan,
+                'status' => $statusTagihan,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ]);
+
+            if($statusTagihan == 'Belum Lunas') {
+                $getLatestDataPembayaranID = DataPembayaran::latest()->first()->id;
+
+                HutangPiutang::create([
+                    'data_pembayaran_id' => $getLatestDataPembayaranID,
+                    'nominal_awal' => $this->dataPembayaran['totalBiaya'] - $this->dataPembayaran['diskonBiaya'],
+                    'diskon' => $this->dataPembayaran['diskonBiaya'],
+                    'dibayar' => $this->dataPembayaran['dibayarPasien'],
+                    'sisa_tagihan' => $sisaTagihan,
+                    'dibayar_oleh' => $this->dataPembayaran['metodePembayaran'],
+                    'metode_pembayaran_id' => $this->dataPembayaran['metodePembayaran'],
+                    'keterangan' => 'Belum Lunas - Pembayaran Awal',
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now(),
+                ]);
+            }
+        } else {
+            dd('Bukan Pasien Lama kah?');
+        }
+
     }
 
     public function cleanDataPasien() {

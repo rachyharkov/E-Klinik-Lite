@@ -2,25 +2,25 @@
     <div style="width: 25%;height: 100%;display: flex;flex-direction: column;" class="inputan-dummy-form-resep">
         <div class="d-flex" style="justify-content: space-between">
             <div class="input-group input-group-sm" style="width: 49%;">
-                <input type="text" class="form-control" placeholder="Berat" aria-label="Berat Badan" aria-describedby="input-bb" onkeyup="$('#bb_pasien').val($(this).val())" value="{{ $dataObatdanResep ? $dataObatdanResep['berat_badan'] : '' }}">
+                <input type="text" class="form-control" placeholder="Berat" aria-label="Berat Badan" aria-describedby="input-bb" onkeyup="$('#bb_pasien').val($(this).val())" value="{{ $dataKeadaanPasien ? $dataKeadaanPasien['berat_badan'] : '' }}">
                 <span class="input-group-text" id="input-bb">KG</span>
             </div>
             <div class="input-group input-group-sm" style="width: 49%;">
-                <input type="text" class="form-control" placeholder="Tinggi" aria-label="Berat Badan" aria-describedby="input-bb" onkeyup="$('#tb_pasien').val($(this).val())" value="{{ $dataObatdanResep ? $dataObatdanResep['tinggi_badan'] : '' }}">
+                <input type="text" class="form-control" placeholder="Tinggi" aria-label="Berat Badan" aria-describedby="input-bb" onkeyup="$('#tb_pasien').val($(this).val())" value="{{ $dataKeadaanPasien ? $dataKeadaanPasien['tinggi_badan'] : '' }}">
                 <span class="input-group-text" id="input-bb">CM</span>
             </div>
         </div>
         <div class="form-group mt-2">
             <label for="alergi-vertical">Alergi Obat</label>
-            <input type="text" id="alergi-vertical" class="form-control form-control-sm" name="alergi_obat" value="{{ $dataObatdanResep ? $dataObatdanResep['alergi_obat'] : '' }}" onkeyup="$('#alergi_obat').val($(this).val())">
+            <input type="text" id="alergi-vertical" class="form-control form-control-sm" name="alergi_obat" value="{{ $dataKeadaanPasien ? $dataKeadaanPasien['alergi_obat'] : '' }}" onkeyup="$('#alergi_obat').val($(this).val())">
         </div>
         <div class="form-group mt-2">
             <label for="fungsi_ginjal-vertical">Ganguan Fungsi Ginjal?</label>
             <select class="form-select form-control-sm" id="fungsi_ginjal-vertical" name="gangguan_fungsi_ginjal" onchange="$('#gangguan_fungsi_ginjal').val($(this).val())">
                 <option value="0"
                 @php
-                    if($dataObatdanResep) {
-                        if($dataObatdanResep['gangguan_fungsi_ginjal'] == 0) {
+                    if($dataKeadaanPasien) {
+                        if($dataKeadaanPasien['gangguan_fungsi_ginjal'] == 0) {
                             echo 'selected';
                         }
                     }
@@ -28,8 +28,8 @@
                 >Tidak</option>
                 <option value="1"
                 @php
-                    if($dataObatdanResep) {
-                        if($dataObatdanResep['gangguan_fungsi_ginjal'] == 1) {
+                    if($dataKeadaanPasien) {
+                        if($dataKeadaanPasien['gangguan_fungsi_ginjal'] == 1) {
                             echo 'selected';
                         }
                     }
@@ -42,8 +42,8 @@
                 <div class="custom-control custom-checkbox">
                     <input type="checkbox" class="form-check-input form-check-primary form-check-glow" name="puasa" id="pasienBerpuasa" style="transform: scale(0.7) translate(4px, -5px);" onchange="$('#puasa').val($(this).is(':checked') ? 1 : 0)"
                     @php
-                        if($dataObatdanResep) {
-                            if($dataObatdanResep['puasa'] == 1) {
+                        if($dataKeadaanPasien) {
+                            if($dataKeadaanPasien['puasa'] == 1) {
                                 echo 'checked';
                             }
                         }
@@ -65,18 +65,18 @@
         <form id="form-resep" style="display: flex;
         flex-direction: column;
         height: 100%;">
-            <input type="hidden" name="bb_pasien" id="bb_pasien" value="{{ $dataObatdanResep ? $dataObatdanResep['berat_badan'] : '' }}">
-            <input type="hidden" name="tb_pasien" id="tb_pasien" value="{{ $dataObatdanResep ? $dataObatdanResep['tinggi_badan'] : '' }}">
-            <input type="hidden" name="alergi_obat" id="alergi_obat" value="{{ $dataObatdanResep ? $dataObatdanResep['alergi_obat'] : '' }}">
-            <input type="hidden" name="gangguan_fungsi_ginjal" id="gangguan_fungsi_ginjal" value="{{ $dataObatdanResep ? $dataObatdanResep['gangguan_fungsi_ginjal'] : '' }}">
-            <input type="hidden" name="puasa" id="puasa" value="{{ $dataObatdanResep ? $dataObatdanResep['puasa'] : 0 }}">
+            <input type="hidden" name="bb_pasien" id="bb_pasien" value="{{ $dataKeadaanPasien ? $dataKeadaanPasien['berat_badan'] : '' }}">
+            <input type="hidden" name="tb_pasien" id="tb_pasien" value="{{ $dataKeadaanPasien ? $dataKeadaanPasien['tinggi_badan'] : '' }}">
+            <input type="hidden" name="alergi_obat" id="alergi_obat" value="{{ $dataKeadaanPasien ? $dataKeadaanPasien['alergi_obat'] : '' }}">
+            <input type="hidden" name="gangguan_fungsi_ginjal" id="gangguan_fungsi_ginjal" value="{{ $dataKeadaanPasien ? $dataKeadaanPasien['gangguan_fungsi_ginjal'] : '' }}">
+            <input type="hidden" name="puasa" id="puasa" value="{{ $dataKeadaanPasien ? $dataKeadaanPasien['puasa'] : 0 }}">
             <ul style="height: 34vh;
             list-style: none;
             padding: 0;
             overflow-y: scroll;
             flex: 1 0 auto;" class="list-obat-untuk-pasien cool-scroll">
-                @if($dataObatdanResep)
-                    @foreach ($dataObatdanResep['obat'] as $key => $item)
+                @if(!empty($dataObatdanResep))
+                    @foreach ($dataObatdanResep as $key => $item)
                         <li class="obat-item-pasien garis-pemisah-custom" style="width: 100%;display: flex;flex-direction: row;justify-content: space-between;padding: 13px 5px;" data-obat_id="{{ $item['id'] }}">
                             <div>
                                 <h5 style="font-size: 15px;">{{ $item['nama_obat'] }}</h5>
@@ -205,22 +205,21 @@
 
                 var form = $(this);
 
-                var obat = [];
+                var dataObatdanResep = [];
 
                 form.find('.obat-item-pasien').each(function() {
                     var obat_id = $(this).data('obat_id');
                     var jumlah = $(this).find('input[name="jumlah[]"]').val();
                     var aturan_pakai = $(this).find('input[name="aturan_pakai[]"]').val();
 
-                    obat.push({
+                    dataObatdanResep.push({
                         'obat_id': obat_id,
                         'jumlah': jumlah,
                         'aturan_pakai': aturan_pakai,
                     })
                 })
 
-                var data = {
-                    'obat': obat,
+                var dataKeadaanPasien = {
                     'berat_badan': form.find('#bb_pasien').val(),
                     'tinggi_badan': form.find('#tb_pasien').val(),
                     'alergi_obat': form.find('#alergi_obat').val(),
@@ -228,15 +227,24 @@
                     'puasa': form.find('#puasa').val(),
                 }
 
-                @this.saveDataObatResep(data).then(() => {
-                    udahDiSaveApaBelom('udah', 'tab-eresep-tab')
+                @this.saveDataObatResep(dataObatdanResep).then(() => {
                     Toast.fire({
                         icon: 'success',
                         title: 'Resep berhasil disimpan'
                     })
+                }).then(() => {
+                    @this.saveDataKeadaanPasien(dataKeadaanPasien).then(() => {
+                        Toast.fire({
+                            icon: 'success',
+                            title: 'Data keadaan pasien berhasil disimpan'
+                        })
+                    })
+                    udahDiSaveApaBelom('udah', 'tab-eresep-tab')
 
                     thissubmitbutton.removeAttr('disabled')
                 })
+
+
             })
         })
 

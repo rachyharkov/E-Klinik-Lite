@@ -89,10 +89,6 @@
                 $(this).attr('disabled', true);
             })
 
-            $(document).on('click', '#btnEnd', function() {
-                alert('Mengarahkan dari ulang...');
-            })
-
             $(document).on('click', '#toggle-patient-done-list', function() {
                 $('#pasien-terlayani-wrapper').toggleClass('hide');
             })

@@ -102,3 +102,10 @@ if(!function_exists('terbilangInRupiah')) {
         }
     }
 }
+
+if(!function_exists('terbilangInRupiahWithCurrency')) {
+    function terbilangInRupiahWithCurrency($number) {
+        return terbilangInRupiah($number) . ' Rupiah';
+    }
+}
+

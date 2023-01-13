@@ -44,7 +44,7 @@
                     <button type="button" class="btn btn-secondary {{ $currentStep <= 1 ? 'd-none' : '' }}" id="prevBtn" wire:click="stepAction(-1)">Sebelumnya</button>
                 @endif
                 @if($currentStep == 4)
-                    <button type="button" class="btn btn-secondary" id="btnEnd" wire:click="stepAction(1)">Simpan</button>
+                    <button type="button" class="btn btn-secondary" id="btnEnd">Finalkan</button>
                 @else
                     <button type="button" class="btn btn-secondary" id="nextBtn" wire:click="stepAction(1)">Selanjutnya</button>
                 @endif
@@ -79,6 +79,37 @@
                     $(`#${apanya} .save-status`).html('');
                 }
             }
+
+            $(document).on('click', '#btnEnd', function() {
+                Swal.fire({
+                    title: 'Yakin ingin mem-finalkan kunjungan?',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#d33',
+                    cancelButtonColor: '#3085d6',
+                    confirmButtonText: 'Ok'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // show loading Swal
+                        $('#toggle-patient-done-list').trigger('click');
+                        @this.stepAction(1).then(() => {
+                            setTimeout(() => {
+                                $('#toggle-patient-done-list').trigger('click');
+                            }, 2000);
+
+                            Swal.fire({
+                                title: 'Berhasil!',
+                                text: 'Kunjungan berhasil di-finalkan',
+                                icon: 'success',
+                                showConfirmButton: false,
+                                timer: 1500
+                            })
+                        })
+                    }
+
+
+                })
+            })
 
         </script>
     @endpush

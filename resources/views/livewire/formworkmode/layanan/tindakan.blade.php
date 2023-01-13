@@ -11,8 +11,8 @@
                 <h4 style="margin-left: 1rem;margin-top: 1rem;">Tindakan Untuk Pasien</h4>
                 <div class="list-of-tindakan-terhadap-pasien" style="height: 36vh;">
                     <ul class="droppable cool-scroll" style="height: 100%;width: 100%;padding: 0 10px;overflow-y: scroll;flex: 1;">
-                        @if($dataLayananAtauTindakan)
-                            @foreach ($dataLayananAtauTindakan as $tindakannya)
+                        @if(!empty($dataTindakan))
+                            @foreach ($dataTindakan as $tindakannya)
                                 <li class="draggable-element tindakan-item d-flex" style="position: relative;
                                 padding: 4px 0px;">
                                     <input type="hidden" name="tindakan_id[]" value="{{ $tindakannya['id'] }}">
@@ -98,7 +98,7 @@
 
                 console.log(dataTindakan);
 
-                @this.saveDataLayananAtauTindakan(dataTindakan).then(() => {
+                @this.savedataTindakan(dataTindakan).then(() => {
                     Toast.fire({
                         icon: 'success',
                         title: 'Berhasil menyimpan data'
