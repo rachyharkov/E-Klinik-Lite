@@ -5,6 +5,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\JenisPasienController;
 use App\Http\Controllers\PasienController;
 use App\Http\Controllers\RekamMedis;
+use App\Http\Controllers\TindakanController;
 use App\Http\Controllers\WorkmodeController;
 
 /*
@@ -42,12 +43,21 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
         });
     });
 
+    Route::prefix('tindakan')->controller(TindakanController::class)->group(function() {
+        Route::get('/', 'index')->name('tindakan.index');
+        Route::post('store', 'store')->name('tindakan.store');
+        Route::post('update/{id}', 'update')->name('tindakan.update');
+        Route::delete('delete/{id}', 'destroy')->name('tindakan.destroy');
+
+        Route::prefix('kategori')->controller(JenisPasienController::class)->group(function() {
+            Route::get('/', 'index')->name('kategori_tindakan.index');
+        });
+    });
+
     Route::prefix('rekam_medis')->controller(RekamMedis::class)->group(function() {
         Route::get('/{id}', 'index')->name('rekam_medis.index');
     });
 
-    Route::get('kategori_tindakan')->name('kategori_tindakan');
-    Route::get('tindakan')->name('tindakan');
     Route::get('produsen')->name('produsen');
     Route::get('kategori_obat')->name('kategori_obat');
     Route::get('obat')->name('obat');

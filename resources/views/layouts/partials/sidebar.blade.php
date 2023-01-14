@@ -10,8 +10,8 @@
         <x-maz-sidebar-submenuitem name="Jenis Pasien" :link="route('jenis_pasien.index')" icon="bi bi-person"></x-maz-sidebar-submenuitem>
     </x-maz-sidebar-item>
     <x-maz-sidebar-item name="Tindakan" icon="bi bi-clipboard2-plus">
-        <x-maz-sidebar-submenuitem name="Data Utama" :link="route('tindakan')" icon="bi bi-person"></x-maz-sidebar-submenuitem>
-        <x-maz-sidebar-submenuitem name="Kategori Tindakan" :link="route('kategori_tindakan')" icon="bi bi-person"></x-maz-sidebar-submenuitem>
+        <x-maz-sidebar-submenuitem name="Data Utama" :link="route('tindakan.index')" icon="bi bi-person"></x-maz-sidebar-submenuitem>
+        <x-maz-sidebar-submenuitem name="Kategori Tindakan" :link="route('kategori_tindakan.index')" icon="bi bi-person"></x-maz-sidebar-submenuitem>
     </x-maz-sidebar-item>
     <x-maz-sidebar-item name="Obat/Barang" icon="bi bi-box-seam">
         <x-maz-sidebar-submenuitem name="Data Utama" :link="route('obat')" icon="bi bi-person"></x-maz-sidebar-submenuitem>
