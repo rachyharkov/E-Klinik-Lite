@@ -28,7 +28,7 @@ class AntrianPatientWidget extends Component
     public function refreshAntrian() {
         // select * from patient_visits, loop through each patient_visit, if patient_temp is 1, connect to patient_temp table, if patient_temp is 0, connect to patient table
         $antrianList = PatientVisit::whereBetween('created_at', [date('Y-m-d 00:00:00'), date('Y-m-d 23:59:59')])
-            ->orderBy('urutan', 'asc')
+            ->orderBy('urutan', 'desc')
             ->get();
 
         $antrianListTemp = [];
@@ -38,7 +38,6 @@ class AntrianPatientWidget extends Component
             $antrian->patient = $patient;
             $antrianListTemp[] = $antrian;
         }
-
         if ($antrianList->count() > 0) {
             $this->antrianList = $antrianList;
         } else {
@@ -50,9 +49,9 @@ class AntrianPatientWidget extends Component
         $patient = null;
 
         if ($patient_temp == 1) {
-            $patient = PatientTemp::find($id)->first();
+            $patient = PatientTemp::where('id', $id)->first();
         } else {
-            $patient = Patient::find($id)->first();
+            $patient = Patient::where('id', $id)->first();
         }
         return $patient;
     }
