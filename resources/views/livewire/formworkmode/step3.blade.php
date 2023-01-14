@@ -21,9 +21,17 @@
         font-size: 10rem;
         left: -11px;
         top: -52px;"></i>
+        <?php
+            if (isset($dataPasien['id'])) {
+                $findJenisPatientId = App\Models\JenisPatient::where('id', $dataPasien['jenis_pasien_id'])->first();
+                echo '<span class="badge bg-success" style="float: right; background-color: '.$findJenisPatientId->color_code.'; margin-left: 0.5rem;">'.$findJenisPatientId->nama_jenis_pasien.'</span>';
+            } else {
+                echo '<span class="badge bg-secondary" style="float: right; margin-left: 0.5rem;">Bukan Member</span>';
+            }
+        ?>
         <?= $dataPasien['risiko_jatuh'] ? '<span class="badge bg-danger" style="float: right;">Risiko Jatuh</span>' : '' ?>
         <h5 style="font-weight: 400; margin: 0;">{{ $dataPasien['patient_name'] }} <span><?= $dataPasien['jenis_kelamin'] == 'Laki-laki' ? '<i class="bi bi-gender-male"></i>' : '<i class="bi bi-gender-female"></i>' ?></span></h5>
-        <p class="m-0" style="font-size: 11px;">{{ App\Models\Regency::find($dataPasien['patient_birth_place'])->first()->name.'/'.$dataPasien['patient_birth_date'] }}</p>
+        <p class="m-0" style="font-size: 11px;">{{$dataPasien['patient_birth_place_name']}}/{{ $dataPasien['patient_birth_date']  }}</p>
         <p class="m-0" style="font-size: 11px;">{{ $dataPasien['patient_address'] }}</p>
     </div>
     <div wire:ignore style="height: 100%;">

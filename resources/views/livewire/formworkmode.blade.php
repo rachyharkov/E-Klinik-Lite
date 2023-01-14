@@ -81,6 +81,24 @@
             }
 
             $(document).on('click', '#btnEnd', function() {
+
+                var inputdibayaroleh = $('#input-dibayar-oleh').val();
+
+                if(inputdibayaroleh == '') {
+                    Swal.fire({
+                        title: 'Perhatian!',
+                        text: "Pilih pembayaran terlebih dahulu",
+                        icon: 'warning',
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+
+                    // show error indicator
+                    $('#input-dibayar-oleh').addClass('is-invalid');
+
+                    return;
+                }
+
                 Swal.fire({
                     title: 'Yakin ingin mem-finalkan kunjungan?',
                     icon: 'warning',
@@ -92,6 +110,11 @@
                     if (result.isConfirmed) {
                         // show loading Swal
                         $('#toggle-patient-done-list').trigger('click');
+
+                        var totalBiaya = $('#total-biaya').val();
+
+                        @this.set('dataPembayaran.totalBiaya', totalBiaya);
+
                         @this.stepAction(1).then(() => {
                             setTimeout(() => {
                                 $('#toggle-patient-done-list').trigger('click');

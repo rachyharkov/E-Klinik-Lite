@@ -125,7 +125,15 @@
                 }],
                 order: [
                     [4, 'desc']
-                ]
+                ],
+                initComplete: function() {
+                    @if(isset($search))
+                        $('#dataTable_filter input').val("{{ $search }}");
+
+                        // trigger search
+                        $('#dataTable_filter input').trigger('keyup');
+                    @endif
+                },
             });
         }
 

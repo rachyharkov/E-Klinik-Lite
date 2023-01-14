@@ -23,12 +23,12 @@
                 @endphp
                 @foreach ($antrianList as $al)
                     <tr style="font-size: 13px;" class="{{ $i == 1 ? 'slide-to-left' : '' }}">
-                        <td>{{ $al->urutan }}</td>
+                        <td>{{ $al['urutan'] }}</td>
                         <td>{{ $al->patient->patient_name }}</td>
                         <td>
                             @php
                                 foreach($arrayjeniskelamindancolor as $key => $jknya) {
-                                    if ($key == $al->jenis_kelamin) {
+                                    if ($key == $al->patient->jenis_kelamin) {
                                         echo '<span class="badge" style="background-color: '.$jknya.';">'.$key.'</span>';
                                     }
                                 }

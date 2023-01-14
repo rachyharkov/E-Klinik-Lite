@@ -1,8 +1,6 @@
 <div class="tab" id="step-4" style="height: 100%;">
     <h4 class="card-title">Final</h4>
     <?php
-
-    $dataPembayaran['totalBiaya'] = 0;
     if (!empty($dataTindakan)) {
         foreach ($dataTindakan as $key => $value) {
             $dataPembayaran['totalBiaya'] += $value['tarif'];
@@ -211,8 +209,8 @@
                 <tfoot>
                     <tr style="">
                         <td colspan="2" rowspan="5" style="vertical-align: top;">
-                            <p>Dibayar oleh <span><input type="text" class="form-control form-control-sm" id="input-dibayar-oleh" aria-describedby="dibayarOleh" wire:model.debounce.600ms="dataPembayaran.dibayarOleh" placeholder="Pasien"></span></p>
-                            <select class="form-select form-select-sm" aria-label="Pilih metode pembayaran" wire:model.debounce.600ms="dataPembayaran.metodePembayaran">
+                            <p>Dibayar oleh <span><input type="text" class="form-control form-control-sm" aria-describedby="dibayarOleh" wire:model.debounce.600ms="dataPembayaran.dibayarOleh" placeholder="Pasien"></span></p>
+                            <select class="form-select form-select-sm" id="input-dibayar-oleh" aria-label="Pilih metode pembayaran" wire:model.debounce.600ms="dataPembayaran.metodePembayaran">
                                 <option value="">Pilih metode pembayaran</option>
                                 <?php
                                     $metodePembayaran = App\Models\MetodePembayaran::all();
@@ -237,6 +235,7 @@
                         </td>
                         <td style="text-align: right; font-weight: bold;">Total</td>
                         <td style="font-weight: bold;">{{ numberToIDR($dataPembayaran['totalBiaya'] + $dataPembayaran['diskonBiaya']) }}</td>
+                        <input type="hidden" id="total-biaya" value="{{ $dataPembayaran['totalBiaya'] + $dataPembayaran['diskonBiaya'] }}">
                     </tr>
                     <tr style="">
                         <td style="text-align: right; font-weight: bold;">Diskon</td>

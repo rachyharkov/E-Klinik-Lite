@@ -22,11 +22,11 @@
         .box .info-overview {
             position: absolute;
             right: -70px;
-            bottom: 5px;
+            bottom: 20px;
             display: flex;
             flex-direction: column;
             height: 82px;
-            justify-content: space-evenly;
+            justify-content: flex-end;
             transition: cubic-bezier(0.075, 0.82, 0.165, 1) 0.5s;
             z-index: 0;
             font-size: 14px;
@@ -103,7 +103,7 @@
             position: absolute;
             left: 60%;
             width: 100%;
-            top: 19%;
+            top: 30%;
             transform: translate(-50%, -50%);
             font-size: 19px;
             font-weight: 500;
@@ -155,7 +155,7 @@
                                         <i class="bi bi-three-dots-vertical" style="color: #fff;"></i>
                                     </button>
                                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                        <li><a class="dropdown-item" href="#">Ganti Warna {{ inDevelopmentIndicator() }}</a></li>
+                                        <li><a class="dropdown-item" href="{{ route('tindakan.index', ['search' => $count['nama_kategori_tindakan']]) }}">Lihat Tindakan</a></li>
                                         <li><a class="dropdown-item" href="#">Migrasi {{ inDevelopmentIndicator() }}</a></li>
                                         <li><a class="dropdown-item" href="#">Ubah Nama {{ inDevelopmentIndicator() }}</a></li>
                                         <li><a class="dropdown-item" href="#">Hapus {{ inDevelopmentIndicator() }}</a></li>
@@ -163,11 +163,9 @@
                                 </div>
                                 <div class="box member-item" style="background-color: {{ $count['color'] }}">
                                     <i class="bi bi-people-fill bg-icon"></i>
-                                    <h4 style="color: {{ generate_contrast_text($count['color']) }};">{{ $count['nama_jenis_pasien'] }}</h4>
+                                    <h4 style="color: {{ generate_contrast_text($count['color']) }};">{{ $count['nama_kategori_tindakan'] }}</h4>
                                     <div class="info-overview">
-                                        <span class="badge bg-primary"><i class="bi bi-person"></i>{{ $count['jumlah_pasien'] }} Pasien</span>
-                                        <span class="badge bg-success"><i class="bi bi-capsule"></i>{{ $count['jumlah_obat'] }} Obat</span>
-                                        <span class="badge bg-info"><i class="bi bi-journal-medical"></i>{{ $count['jumlah_tindakan'] }} Tindakan</span>
+                                        <span class="badge bg-info"><i class="bi bi-journal-medical"></i>{{ $count['jumlah'] }} Tindakan</span>
                                     </div>
                                 </div>
                             </div>

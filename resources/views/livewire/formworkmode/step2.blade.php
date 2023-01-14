@@ -104,13 +104,7 @@
                                     <div class="form-group">
                                         <select wire:model.debounce.800ms="dataPasien.patient_birth_place" type="text" id="patient-birth-place" class="form-control selectTize" name="patient_birth_place" autocomplete="off" placeholder="Nama Kabupaten/Kota">
                                             @foreach ($listDataDaerah as $dataDaerah)
-                                                <option value="{{ $dataDaerah->id }}"
-                                                    @php
-                                                        if($dataPasien) {
-                                                            isset($dataPasien['patient_birth_place']) ? $dataPasien['patient_birth_place'] == $dataDaerah->id ? print 'selected' : '' : '';
-                                                        }
-                                                    @endphp
-                                                    >{{ $dataDaerah->name }}</option>
+                                                <option value="{{ $dataDaerah->id }}">{{ $dataDaerah->name }}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -169,9 +163,17 @@
                 $(document).ready(function() {
                     $('.selectTize').selectize({
                         sortField: 'text',
+                        onInitialize: function() {
+                            @if($dataPasien['patient_birth_place'] != null)
+                                this.setValue({{ $dataPasien['patient_birth_place'] }});
+                            @else
+                                this.setValue(null);
+                            @endif
+                        },
                         onChange: function(value) {
                             @this.set('dataPasien.patient_birth_place', value);
                         }
+
                     });
                 });
             </script>

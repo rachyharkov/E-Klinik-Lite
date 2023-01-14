@@ -3,10 +3,12 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\JenisPasienController;
+use App\Http\Controllers\KategoriTindakanController;
 use App\Http\Controllers\PasienController;
 use App\Http\Controllers\RekamMedis;
 use App\Http\Controllers\TindakanController;
 use App\Http\Controllers\WorkmodeController;
+use App\Models\KategoriTindakan;
 
 /*
 |--------------------------------------------------------------------------
@@ -49,7 +51,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
         Route::post('update/{id}', 'update')->name('tindakan.update');
         Route::delete('delete/{id}', 'destroy')->name('tindakan.destroy');
 
-        Route::prefix('kategori')->controller(JenisPasienController::class)->group(function() {
+        Route::prefix('kategori')->controller(KategoriTindakanController::class)->group(function() {
             Route::get('/', 'index')->name('kategori_tindakan.index');
         });
     });

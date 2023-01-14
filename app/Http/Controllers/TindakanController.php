@@ -19,8 +19,13 @@ class TindakanController extends Controller
                 ->addColumn('action','livewire.tindakan._action')
                 ->toJson();
         }
+        $data = [];
 
-        return view('tindakan.index');
+        if(request()->has('search')) {
+            $data['search'] = request()->search;
+        }
+
+        return view('tindakan.index', $data);
     }
 
     public function store(Request $request)
