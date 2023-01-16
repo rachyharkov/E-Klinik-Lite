@@ -74,7 +74,7 @@
                             <tr>
                                 <td>Jenis Pasien</td>
                                 <td>:</td>
-                                <td>{{ $jenis_pasien_id }}</td>
+                                <td>{{ App\Models\JenisPatient::find($jenis_pasien_id)->nama_jenis_pasien }} (Sejak: {{ $registered_at }})</td>
                             </tr>
                         </tbody>
                     </table>
@@ -94,7 +94,7 @@
                 <div class="tab-pane fade" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab">
                     <div class="grid-container">
                         <div class="grid-item">
-                            <button class="btn btn-outline-secondary" style="display: flex;flex-direction: column;justify-content: center;" wire:click="setMenu('edit',{{ $pasien_id }})">
+                            <button class="btn btn-outline-secondary" style="display: flex;flex-direction: column;justify-content: center;" wire:click="setMenu('edit',{{ $pasien_id }}, {{ $jenis_pasien_id }})">
                                 <i class="bi bi-pencil-square" style="height: 70%;font-size: 45px;width: 100%;"></i>
                                 Edit
                             </button>

@@ -2,23 +2,7 @@
 
 @section('title', 'Dashboard')
 
-@section('page-title')
-    <div class="row">
-        <div class="col-12 col-md-6 order-md-1 order-last">
-            <h3>Dashboard</h3>
-            <p class="text-subtitle text-muted">Selamat {{ date('H') < 11 ? 'Pagi' : (date('H') < 15 ? 'Siang' : 'Sore') }}
-                {{ Auth::user()->name }}.</p>
-        </div>
-        <div class="col-12 col-md-6 order-md-2 order-first">
-            <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item active" aria-current="page">Dashboard</li>
-                </ol>
-            </nav>
-        </div>
-    </div>
-@endsection
-
+@section('page-title','Dashboard')
 
 @section('content')
     <section class="section">

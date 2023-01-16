@@ -81,9 +81,6 @@
                                 Edit
                             </button>
                         </div>
-                        <div class="grid-item">
-                            <button class="btn btn-outline-secondary" style="display: flex;flex-direction: column;justify-content: center;" onclick="alert('sedang dalam tahap pengembangan')" ><i class="bi bi-journal-plus" style="height: 70%;font-size: 45px;width: 100%;"></i>Mulai Kunjungan</button>
-                        </div>
                     </div>
                 </div>
             </div>

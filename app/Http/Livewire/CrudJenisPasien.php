@@ -32,6 +32,15 @@ class CrudJenisPasien extends Component
             $nama_jenis_pasien = $value->nama_jenis_pasien;
             $color = $value->color_code;
 
+            $jumlahPasien = null;
+            if($jenis_pasien_id == 1) {
+                $jumlahPasien = DB::table('patient_temps')->count();
+            } else {
+                $jumlahPasien = DB::table('patients')
+                    ->where('jenis_pasien_id', $jenis_pasien_id)
+                    ->count();
+            }
+
             $dataObat = DB::table('allowed_supplies')
                 ->where('jenis_pasien_id', $jenis_pasien_id)
                 ->where('kategori_supply', 'obat')
@@ -42,9 +51,6 @@ class CrudJenisPasien extends Component
                 ->where('kategori_supply', 'tindakan')
                 ->count();
 
-            $jumlahPasien = DB::table('patients')
-                ->where('jenis_pasien_id', $jenis_pasien_id)
-                ->count();
 
             $data_count[] = [
                 'nama_jenis_pasien' => $nama_jenis_pasien,
@@ -54,6 +60,7 @@ class CrudJenisPasien extends Component
                 'color' => $color
             ];
         }
+
 
         $this->data_counter = $data_count;
     }

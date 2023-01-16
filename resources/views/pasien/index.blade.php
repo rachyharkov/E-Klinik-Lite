@@ -21,6 +21,13 @@
             display: inline-block;
             margin: 5px 20px;
         }
+
+        #filterJenisPasienSelect {
+            display: inline-block;
+            padding-left: 30px;
+            float: right;
+            padding-top: 5px;
+        }
     </style>
 
     <section class="section">
@@ -73,6 +80,30 @@
             })
         })
 
+        function initSelectJenisPasien() {
+            $('#filterJenisPasienSelect').html(`
+                <select id="filterJenisPasien" class="form-select form-select-sm" name="filterJenisPasien">
+                    <option value="">Semua Jenis Pasien</option>
+                    @foreach ($jenisPasien as $item)
+                        <option value="{{ $item->id }}">{{ $item->nama_jenis_pasien }}</option>
+                    @endforeach
+                </select>
+            `);
+
+            // add event listener for select filter
+            $('#filterJenisPasien').on('change', function() {
+                // do query filterJenisPasien?=value
+
+                var value = $(this).val();
+                var url = "{{ route('pasien.index') }}";
+                if (value != '') {
+                    url += "?filterJenisPasien=" + value;
+                }
+                $('#dataTable').DataTable().ajax.url(url).load();
+
+            })
+        }
+
         function loadTable() {
 
             $('#dataTable').DataTable({
@@ -110,6 +141,13 @@
                         }
                     },
                     {
+                        data: 'jenis_pasien',
+                        name: 'jenis_pasien',
+                        render: function(data) {
+                            return `<span class="badge" style="background-color: ${data.color_code}"">${data.nama_jenis_pasien}</span>`;
+                        }
+                    },
+                    {
                         data: 'created_at',
                         name: 'created_at',
                         render: function(data) {
@@ -129,7 +167,7 @@
                 language: {
                     lengthMenu: '_MENU_ items/page',
                 },
-                dom: 'Blfrtip',
+                dom: 'Blfr<"#filterJenisPasienSelect">tip',
                 // button with livewire action
                 buttons: [{
                     text: 'Tambah Pasien',
@@ -139,9 +177,13 @@
                 }],
                 order: [
                     [4, 'desc']
-                ]
+                ],
+                initComplete: function() {
+                    initSelectJenisPasien();
+                },
             });
         }
+
 
         // refresh datatable when livewire action is called
         window.addEventListener('initTableNya', event => {

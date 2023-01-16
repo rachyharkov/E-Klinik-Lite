@@ -6,6 +6,7 @@
                 <th>JK</th>
                 <th>Alamat</th>
                 <th>Risiko Jatuh</th>
+                <th>Jenis Pasien</th>
                 <th>Ter-registrasi</th>
                 <th>Aksi</th>
             </tr>

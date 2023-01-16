@@ -7,7 +7,8 @@
                 <label>Nama Pasien</label>
             </div>
             <div class="col-12 form-group">
-                <input type="text" id="patient-name" class="form-control" wire:model.defer="patient_name" name="patient_name">
+                <input type="text" id="patient-name" class="form-control" wire:model.defer="patient_name"
+                    name="patient_name">
             </div>
             <div class="col-md-4">
                 <label>Jenis Kelamin</label>
@@ -24,17 +25,28 @@
             <div class="col-12 form-group">
                 <div class="row">
                     <div class="col-md-6">
-                        <input type="text" id="tempat-lahir" class="form-control" wire:model.defer="patient_birth_place" name="patient_birth_place">
+                        <div class="form-group" wire:ignore>
+                            <select id="patient-birth-place-select" class="form-control selectTize" autocomplete="off"
+                                placeholder="Nama Kabupaten/Kota">
+                                @foreach ($listDataDaerah as $dataDaerah)
+                                    <option value="{{ $dataDaerah->id }}">{{ $dataDaerah->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <input type="hidden" id="tempat-lahir" class="form-control"
+                            wire:model.defer="patient_birth_place" name="patient_birth_place">
                     </div>
                     <div class="col-md-6">
-                        <input type="date" id="tanggal-lahir" class="form-control" wire:model.defer="patient_birth_date" name="patient_birth_date">
+                        <input type="date" id="tanggal-lahir" class="form-control"
+                            wire:model.defer="patient_birth_date" name="patient_birth_date">
                     </div>
                 </div>
             </div>
             <div class="col-12 form-group">
                 <div class="form-check">
                     <div class="checkbox">
-                        <input type="checkbox" id="risiko-jatuh" class="form-check-input" checked="" wire:model.defer="risiko_jatuh" name="risiko_jatuh">
+                        <input type="checkbox" id="risiko-jatuh" class="form-check-input" checked=""
+                            wire:model.defer="risiko_jatuh" name="risiko_jatuh">
                         <label for="risiko-jatuh">Risiko Jatuh</label>
                     </div>
                 </div>
@@ -44,15 +56,18 @@
             </div>
             <div class="col-12 form-group">
                 @foreach ($jenis_pasien_list as $jp)
-                {{-- create radio --}}
+                    {{-- create radio --}}
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" wire:model.defer="jenis_pasien_id" name="jenis_pasien_id" id="jenis-pasien-{{ $jp->id }}"
-                            value="{{ $jp->id }}">
+                        <input class="form-check-input" type="radio" wire:model="jenis_pasien_id"
+                            name="jenis_pasien_id" id="jenis-pasien-{{ $jp->id }}" value="{{ $jp->id }}">
                         <label class="form-check-label" for="jenis-pasien-{{ $jp->id }}">
                             {{ $jp->nama_jenis_pasien }}
+                            <?= $jp->id == $jenis_pasien_id_old ? '<span style="font-size: 11px; vertical-align: 3px;"><i class="bi bi-check-circle-fill text-success"></i> Sejak: ' . date('d-M-Y H:i:s', strtotime($registered_at)) . '</span>' : '' ?>
                         </label>
                     </div>
                 @endforeach
+                <input type="hidden" id="jenis-pasien-old" class="form-control" wire:model.defer="jenis_pasien_id_old"
+                    name="jenis_pasien_id_old">
             </div>
         </div>
         <div class="col-md-6">
@@ -61,17 +76,20 @@
                 <label>Alamat</label>
             </div>
             <div class="col-12 form-group">
-                <textarea class="form-control" id="patient_address" wire:model.defer="patient_address" name="patient_address" rows="3"></textarea>
+                <textarea class="form-control" id="patient_address" wire:model.defer="patient_address" name="patient_address"
+                    rows="3"></textarea>
             </div>
             <div class="col-md-4">
                 <label>No. Telepon</label>
             </div>
             <div class="col-12 form-group">
-                <input type="text" id="no-telp" class="form-control" wire:model.defer="patient_phone" name="patient_phone">
+                <input type="text" id="no-telp" class="form-control" wire:model.defer="patient_phone"
+                    name="patient_phone">
             </div>
         </div>
         <div class="col-sm-12 d-flex justify-content-end">
-            <button type="button" class="btn btn-light-secondary me-1 mb-1" wire:click="setMenu('index')">Cancel</button>
+            <button type="button" class="btn btn-light-secondary me-1 mb-1"
+                wire:click="setMenu('index')">Cancel</button>
             <button type="button" class="btn btn-light-secondary me-1 mb-1 btn-restore">Reset</button>
             <button type="submit" class="btn btn-primary me-1 mb-1">Submit</button>
         </div>

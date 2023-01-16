@@ -11,11 +11,21 @@
         $(document).ready(function() {
 
             //in form-pasien, if user start typing on specified only with invalid-feedback, then remove invalid-feedback
-            $('.form-pasien').on('keyup', '.is-invalid', function() {
+            $('.form-pasien').on('keyup change input paste', '.is-invalid', function() {
                 $(this).removeClass('is-invalid');
             });
 
             @if($menu == 'edit')
+                var selectizenya = $('.selectTize').selectize({
+                    sortField: 'text',
+                    onInitialize: function() {
+                        this.setValue({{ $patient_birth_place }});
+                    },
+                    onChange: function(value) {
+                        $('#tempat-lahir').val(value);
+                    }
+                });
+
                 $(document).on('click','.btn-restore', function() {
                     Swal.fire({
                         title: 'Kembalikan ke Semula?',
@@ -27,7 +37,18 @@
                         confirmButtonText: 'Ya, kembalikan!'
                     }).then((result) => {
                         if (result.isConfirmed) {
-                            window.livewire.emit('restoreValue');
+                            @this.call('restoreValue').then(() => {
+                                // swal timer
+                                Swal.fire({
+                                    title: 'Success!',
+                                    text: 'Data berhasil dikembalikan ke semula!',
+                                    icon: 'success',
+                                    timer: 1000
+                                })
+
+                                // set selectize to default value
+                                selectizenya[0].selectize.setValue({{ $patient_birth_place }});
+                            });
                         }
                     })
                 })
@@ -37,6 +58,7 @@
 
             $('.form-pasien').submit(function(e) {
                 e.preventDefault();
+
                 var form = $(this);
                 var url = form.attr('action');
                 var data = form.serialize();

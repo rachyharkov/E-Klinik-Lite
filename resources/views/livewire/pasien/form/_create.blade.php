@@ -23,7 +23,14 @@
             <div class="col-12 form-group">
                 <div class="row">
                     <div class="col-md-6">
-                        <input type="text" id="tempat-lahir" class="form-control" wire:model.defer="patient_birth_place" name="patient_birth_place">
+                        <div class="form-group">
+                            <select id="patient-birth-place-select" class="form-control selectTize" autocomplete="off" placeholder="Nama Kabupaten/Kota">
+                                @foreach ($listDataDaerah as $dataDaerah)
+                                    <option value="{{ $dataDaerah->id }}">{{ $dataDaerah->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <input type="hidden" id="tempat-lahir" class="form-control" wire:model.defer="patient_birth_place" name="patient_birth_place">
                     </div>
                     <div class="col-md-6">
                         <input type="date" id="tanggal-lahir" class="form-control" wire:model.defer="patient_birth_date" name="patient_birth_date">
@@ -75,4 +82,18 @@
             <button type="submit" class="btn btn-primary me-1 mb-1">Submit</button>
         </div>
     </div>
+
+    <script>
+        $(document).ready(function() {
+            $('.selectTize').selectize({
+                sortField: 'text',
+                onInitialize: function() {
+                    this.setValue(null);
+                },
+                onChange: function(value) {
+                    $('#tempat-lahir').val(value);
+                }
+            });
+        });
+    </script>
 </div>
