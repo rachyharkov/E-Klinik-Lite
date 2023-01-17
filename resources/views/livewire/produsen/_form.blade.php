@@ -17,7 +17,7 @@
                         window.editor = newEditor
 
                         newEditor.model.document.on('change:data', () => {
-                            newEditor.updateSourceElement();
+                            newEditor.updateSourceElement()
                         });
                     })
                     .catch( error => {console.error( error );});

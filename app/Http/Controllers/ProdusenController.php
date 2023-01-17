@@ -29,6 +29,8 @@ class ProdusenController extends Controller
             'catatan' => 'required',
         ]);
 
+        $datanya['catatan'] = htmlentities($datanya['catatan']);
+
         Produsen::create($datanya);
 
         return [
@@ -46,6 +48,7 @@ class ProdusenController extends Controller
         ]);
 
         $datanya = Produsen::find($id);
+        $request['catatan'] = htmlentities($request['catatan']);
         $datanya->update($request->all());
         $datanya->save();
 

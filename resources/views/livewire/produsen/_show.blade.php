@@ -44,7 +44,7 @@
                             <tr>
                                 <td>Catatan</td>
                                 <td>:</td>
-                                <td>{{ $catatan }}</td>
+                                <td><?= html_entity_decode($catatan) ?></td>
                             </tr>
                         </tbody>
                     </table>

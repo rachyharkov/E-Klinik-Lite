@@ -11,7 +11,7 @@
                 <label>Catatan</label>
             </div>
             <div class="col-12 form-group">
-                <textarea class="form-control ckeditor" name="catatan" id="catatan" cols="30" rows="10">{{ $catatan }}</textarea>
+                <textarea class="form-control ckeditor" name="catatan" id="catatan" cols="30" rows="10">{{ html_entity_decode($catatan) }}</textarea>
             </div>
         <div class="col-sm-12 d-flex justify-content-end">
             <button type="button" class="btn btn-light-secondary me-1 mb-1" wire:click="setMenu('index')">Cancel</button>
