@@ -5,6 +5,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\JenisPasienController;
 use App\Http\Controllers\KategoriTindakanController;
 use App\Http\Controllers\PasienController;
+use App\Http\Controllers\ProdusenController;
 use App\Http\Controllers\RekamMedis;
 use App\Http\Controllers\TindakanController;
 use App\Http\Controllers\WorkmodeController;
@@ -60,12 +61,23 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
         Route::get('/{id}', 'index')->name('rekam_medis.index');
     });
 
-    Route::get('produsen')->name('produsen');
-    Route::get('kategori_obat')->name('kategori_obat');
-    Route::get('obat')->name('obat');
-    Route::get('satuan_obat')->name('satuan_obat');
-    Route::get('jenis_penggunaan_obat')->name('jenis_penggunaan_obat');
-    Route::get('laporan')->name('laporan');
+    Route::prefix('obat')->group(function() {
+        Route::get('/')->name('obat');
+        Route::get('kategori_obat')->name('kategori_obat');
+        Route::get('satuan_obat')->name('satuan_obat');
+        Route::get('jenis_penggunaan_obat')->name('jenis_penggunaan_obat');
+        Route::get('laporan')->name('laporan');
+
+
+        Route::prefix('produsen')->controller(ProdusenController::class)->group(function() {
+            Route::get('/', 'index')->name('produsen.index');
+            Route::post('store', 'store')->name('produsen.store');
+            Route::post('update/{id}', 'update')->name('produsen.update');
+            Route::delete('delete/{id}', 'destroy')->name('produsen.destroy');
+        });
+    });
+
+
 
 
 });

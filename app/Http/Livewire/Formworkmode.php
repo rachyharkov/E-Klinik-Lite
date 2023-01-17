@@ -115,6 +115,28 @@ class Formworkmode extends Component
 
         if ($this->currentStep >= 2 && $this->currentStep <= 3 && $this->dataPasien['patient_birth_place']) {
             $this->dataPasien['patient_birth_place_name'] = Regency::where('id', $this->dataPasien['patient_birth_place'])->first()->name;
+
+            if(
+                $this->dataPasien['patient_name'] != null &&
+                $this->dataPasien['patient_birth_place'] != null &&
+                $this->dataPasien['patient_birth_date'] != null &&
+                $this->dataPasien['jenis_kelamin'] != null &&
+                $this->dataPasien['patient_phone'] != null
+            ) {
+                $dataPasienTempFound = PatientTemp::where([
+                    ['patient_name', 'like', '%'.$this->dataPasien['patient_name'].'%'],
+                    ['patient_phone', 'like', '%'.$this->dataPasien['patient_phone'].'%'],
+                    ['patient_birth_place', $this->dataPasien['patient_birth_place']],
+                    ['patient_birth_date', $this->dataPasien['patient_birth_date']],
+                    ['jenis_kelamin', 'like', '%'.$this->dataPasien['jenis_kelamin'].'%'],
+                ])->get();
+
+                if($dataPasienTempFound->count() > 0) {
+                    $this->currentStep -= $step;
+                    $this->dispatchBrowserEvent('sistemMenemukanDataPasien', ['dataPasienFounds' => $dataPasienTempFound]);
+                }
+            }
+
         }
 
         if($this->currentStep == 3 && !$this->dataTindakan && !$this->dataObatdanResep && !$this->dataKonsultasi){

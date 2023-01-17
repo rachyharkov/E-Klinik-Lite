@@ -70,6 +70,42 @@
                         }
                     })
                 })
+
+                @this.on('sistemMenemukanDataPasien', (event) => {
+                    console.log(event.detail.dataPasienFounds)
+                    Swal.fire({
+                        title: 'Perhatian!',
+                        text: "Sistem menemukan data pasien yang sama, pilih salah satu diantara temuan berikut",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#d33',
+                        cancelButtonColor: '#3085d6',
+                        confirmButtonText: 'Ok'
+                        inputOptions: [
+                            {
+                                'id': '1',
+                                'text': 'Test'
+                            },
+                            {
+                                'id': '2',
+                                'text': 'Test2'
+                            },
+                        ],
+                        inputValidator: (value) => {
+                            return new Promise((resolve) => {
+                                if (value === '1') {
+                                    resolve()
+                                } else {
+                                    resolve('You need to select something!')
+                                }
+                            })
+                        }
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            alert('ok, you selected ' + result.value)
+                        }
+                    })
+                })
             })
 
             function udahDiSaveApaBelom(status, apanya) {

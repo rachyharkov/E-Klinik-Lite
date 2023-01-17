@@ -36,11 +36,6 @@ class CrudPasien extends Component
         return view('livewire.crud-pasien');
     }
 
-    public function updated($propertyName)
-    {
-        dd('$propertyName');
-    }
-
     public function setMenu($menu, $id = null, $jenisPasien = null)
     {
         $this->menu = $menu;

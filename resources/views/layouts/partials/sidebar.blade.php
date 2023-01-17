@@ -18,7 +18,7 @@
         <x-maz-sidebar-submenuitem name="Kategori Obat" :link="route('kategori_obat')" icon="bi bi-person"></x-maz-sidebar-submenuitem>
         <x-maz-sidebar-submenuitem name="Satuan Obat" :link="route('satuan_obat')" icon="bi bi-person"></x-maz-sidebar-submenuitem>
         <x-maz-sidebar-submenuitem name="Jenis Penggunaan Obat" :link="route('jenis_penggunaan_obat')" icon="bi bi-person"></x-maz-sidebar-submenuitem>
-        <x-maz-sidebar-submenuitem name="Produsen" :link="route('produsen')" icon="bi bi-person"></x-maz-sidebar-submenuitem>
+        <x-maz-sidebar-submenuitem name="Produsen" :link="route('produsen.index')" icon="bi bi-person"></x-maz-sidebar-submenuitem>
     </x-maz-sidebar-item>
     <hr class="sidebar-divider">
     <x-maz-sidebar-item name="Laporan" :link="route('laporan')" icon="bi bi-file-earmark-text"></x-maz-sidebar-item>
